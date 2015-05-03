@@ -13,7 +13,7 @@
 <script language="javascript">
 	function selChange(){
 	    var opt = document.getElementById("ordertype").selectedIndex;
-	    document.getElementById("reason").style.display = opt==="2"?'':'none';
+	    document.getElementById("reason").style.display = opt==="2"?'none':'';
 	}
 </script>
 <%

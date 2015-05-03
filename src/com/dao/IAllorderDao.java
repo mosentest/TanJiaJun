@@ -7,7 +7,7 @@ import com.entity.TAllorder;
 public interface IAllorderDao {
 	
 	/**增加出入库单**/
-	public boolean insert(TAllorder hp);
+	public Integer insert(TAllorder hp);
 	
 	/**删除出入库单**/
 	public boolean delete(TAllorder hp);

@@ -29,13 +29,22 @@ public class AllorderDaoImpl extends BaseDAO implements IAllorderDao {
 		}
 		return this.getHibernateTemplate().get(TAllorder.class, hp.getId());
 	}
+//	/**增加出入库单**/
+//	public boolean insert(TAllorder hp) {
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		Date d=new Date();
+//		hp.setTime(formatter.format(d).toString());
+//		this.getHibernateTemplate().save(hp);
+//		return true;
+//	}
+	
 	/**增加出入库单**/
-	public boolean insert(TAllorder hp) {
+	public Integer insert(TAllorder hp) {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date d=new Date();
 		hp.setTime(formatter.format(d).toString());
 		this.getHibernateTemplate().save(hp);
-		return true;
+		return hp.getId();
 	}
 	/**查询出入库单列表**/
 	public List<TAllorder> list() {

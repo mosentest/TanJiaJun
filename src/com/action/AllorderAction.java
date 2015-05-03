@@ -3,12 +3,18 @@ package com.action;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
+
+import org.hibernate.mapping.Collection;
 
 import com.entity.TAllorder;
 import com.entity.TAllorderdetail;
@@ -29,7 +35,7 @@ import com.util.DebugUtil;
 import com.util.PageBean;
 import com.util.ShoppingCartUtil;
 
-public class AllorderAction extends ActionSupport {
+public class AllorderAction extends BaseAction {
 	/**
 	 * 
 	 */
@@ -169,21 +175,23 @@ public class AllorderAction extends ActionSupport {
 		}
 		return "success";
 	}
-	
-//	/**
-//	 * 检验提交 药品入库单
-//	 */
-//	public void validateToAddAllorder(){
-////		if(allorderdetail.getTMedicine() == null || allorderdetail.getTMedicine().getId() <= 0){
-////			addFieldError("allorderdetail.TMedicine.id", "请选择药品");
-////		}
-//		if(allorderdetail.getTProducter()== null || allorderdetail.getTProducter().getId() <= 0){
-//			addFieldError("allorderdetail.TProducter.id", "请选择供应商");
-//		}
-//		if(allorderdetail.getNum().length() > 0){
-//			addFieldError("allorderdetail.num","请输入数量");
-//		}
-//	}
+
+	// /**
+	// * 检验提交 药品入库单
+	// */
+	// public void validateToAddAllorder(){
+	// // if(allorderdetail.getTMedicine() == null ||
+	// allorderdetail.getTMedicine().getId() <= 0){
+	// // addFieldError("allorderdetail.TMedicine.id", "请选择药品");
+	// // }
+	// if(allorderdetail.getTProducter()== null ||
+	// allorderdetail.getTProducter().getId() <= 0){
+	// addFieldError("allorderdetail.TProducter.id", "请选择供应商");
+	// }
+	// if(allorderdetail.getNum().length() > 0){
+	// addFieldError("allorderdetail.num","请输入数量");
+	// }
+	// }
 
 	public String removeAllorder() {
 		Map session = ActionContext.getContext().getSession();
@@ -239,7 +247,19 @@ public class AllorderAction extends ActionSupport {
 
 	// 新增提交
 	public String AddAllorder() {
+		// TODO
+		// 1添加订单信息
+		List<TAllorderdetail> allorderdetails = ShoppingCartUtil.getCartInfo(getSession());
+		Set<TAllorderdetail> setAllorderdetails = null;
+		if (allorderdetails != null) {
+			setAllorderdetails = new HashSet<TAllorderdetail>(allorderdetails);
+		}
+		allorder.setTAllorderdetails(setAllorderdetails);
+		allorder.setSum(ShoppingCartUtil.getCountCartInfo(getSession())+"");
+		allorder.setTUser(ShoppingCartUtil.getCurrentUser(getSession()));
+		allorder.setStatus("未审核");
 		allorderService.insAllorder(allorder);
+		// 2添加 订单详细表信息(关联上面1 的表，另外关联药品和供应商)
 		return "AllorderList";
 	}
 
