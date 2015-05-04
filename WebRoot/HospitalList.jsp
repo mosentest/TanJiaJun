@@ -103,20 +103,20 @@
       <tr>
         <th width="4%"   >选择</th>
         <th width="12%" >医院名称</th>
-        <th width="10%"  >负责人</th>
-        <th width="14%" >电话</th>
-        <th width="14%"  >录入时间</th>
+        <th width="14%" >电话</th>  
+        <th width="10%"  >负责人</th>     
         <th width="20%">地址</th>
+        <th width="14%"  >更新时间</th>
         <th width="14%" >基本操作</th>
       </tr>
       <s:iterator value="HospitalList">
       <tr>
      	<td><input type="checkbox" name="id" value="<s:property value="id"/>" /></td>
-        <td ><s:property value="name" /></td>
-        <td ><s:property value="manager" /></td>
+        <td ><s:property value="name" /></td>        
         <td ><s:property value="phone" /></td>
-        <td ><s:property value="time" /></td>
+        <td ><s:property value="manager" /></td>
         <td ><s:property value="adress" /></td>
+        <td ><s:property value="time" /></td>
         <td><a href="javascript:getHospital('<s:property value="id" />')">修改</a>|
           <a href="javascript:deleteHospital('<s:property value="id" />')">删除</a></td> 
       </tr>

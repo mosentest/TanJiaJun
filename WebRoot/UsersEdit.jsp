@@ -28,7 +28,7 @@
 					</tr>
 					<tr>
 						<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
-							class="tablestyle_title" style="text-align: center;">查看修改用户信息</td>
+							class="tablestyle_title" style="text-align: center;"><b>查看修改用户信息</b></td>
 					</tr>
 					<tr>
 						<td>

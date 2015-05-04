@@ -10,6 +10,11 @@
                 class="com.action.AllorderAction" method="toAddAllorderdetail" >
                 <result name="success">AllorderdetailAdd.jsp</result>
          </action>
+         
+  	     <action name="AllordertoAddB"
+                class="com.action.AllorderAction" method="toAddAllorderdetail" >
+                <result name="success">AllorderdetailAdd.jsp</result>
+         </action>
          <action name="*List" 
                 class="com.action.{1}Action" method="List{1}" >
                 <result name="toList">{1}List.jsp</result>

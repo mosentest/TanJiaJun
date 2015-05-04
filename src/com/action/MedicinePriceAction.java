@@ -1,5 +1,6 @@
 package com.action;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,6 +12,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.service.IMedicinePriceService;
 import com.service.IMedicineService;
 import com.service.IProducterService;
+import com.util.DebugUtil;
 import com.util.PageBean;
 
 public class MedicinePriceAction extends ActionSupport{
@@ -71,7 +73,7 @@ public class MedicinePriceAction extends ActionSupport{
 		this.producters = producters;
 	}
 
-	/*	// 跳转新增页面
+	/**	// 跳转新增页面
 	public String toAddProduct() {
 		return "toAdd";
 	}*/
@@ -80,21 +82,31 @@ public class MedicinePriceAction extends ActionSupport{
 		producters=producterService.getProducter();
 		return "success";
 	}
-	// 新增提交
+	
+	/**
+	 *  新增提交
+	 * @return
+	 */
 	public String AddMedicinePrice() {
 		String hql="where  TMedicine.id="+medicineprice.getTMedicine().getId()
 							+" and TProducter.id="+medicineprice.getTProducter().getId() ;
-		List<TMedpromiddle> medicineprice2=medicinepriceService.getMedicinePrices(hql);
+		List<TMedpromiddle> medicineprice2 = medicinepriceService.getMedicinePrices(hql);
+		//TODO2015-5-3
 		if(medicineprice2.size()>0){
-			if(type.equals("price"))
+			if("price".equals(type))
+				//价格
 				medicineprice2.get(0).setPrice(medicineprice.getPrice());
 			else{
+				//生产时间
 				medicineprice2.get(0).setProdate(medicineprice.getProdate());
+				//有效时间
 				medicineprice2.get(0).setValue(medicineprice.getValue());
 			}
 			medicineprice=medicineprice2.get(0);
+			//更新时间
 			medicinepriceService.uptMedicinePrice(medicineprice);
 		}else
+			//插入数据库
 			medicinepriceService.insMedicinePrice(medicineprice);
 		return "MedicinePriceList";
 	}
@@ -156,7 +168,7 @@ public class MedicinePriceAction extends ActionSupport{
 			hql="where price !=''";
 		else
 			hql="where prodate !=''";
-		this.pageBean=medicinepriceService.queryForPage(5, page, medicineprice,hql);
+		this.pageBean=medicinepriceService.queryForPage(10, page, medicineprice,hql);
 		medicinepriceList = pageBean.getList();//有分页的获取列表
 		return "toList";
 	}
@@ -183,14 +195,21 @@ public class MedicinePriceAction extends ActionSupport{
 
 	@SuppressWarnings("unchecked")
 	public String SearchMedicinePrice() {
+		try {
+			hpvalue = new String(hpvalue.getBytes("iso8859-1"), "UTF-8");
+			DebugUtil.debugInfo(hpvalue);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		String sql="";
 		if(type.equals("price"))
-			sql="where price like '%"+hpvalue+"%'" ;
+			sql="where price like '%"+hpvalue+"%' or medid like '%"+hpvalue+
+			"%'";
 		else
 			sql="where prodate like '%"+hpvalue+"%' or value like '%"+hpvalue+"%'" ;
 /*				"' or manager like '%"+hpvalue+"%' or"+
 				" phone like '%"+hpvalue+"%' or adress like '%"+hpvalue+"%'";*/
-		this.pageBean=medicinepriceService.queryForPage(5, page, medicineprice,sql);
+		this.pageBean=medicinepriceService.queryForPage(10, page, medicineprice,sql);
 		medicinepriceList = pageBean.getList();//有分页的获取列表
 		return "toList";
 	}

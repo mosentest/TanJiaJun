@@ -90,7 +90,7 @@ public class ProducterAction extends ActionSupport{
 	
 	@SuppressWarnings("unchecked")
 	public String ListProducter() {
-		this.pageBean=producterService.queryForPage(5, page, producter,"");
+		this.pageBean=producterService.queryForPage(10, page, producter,"");
 		ProducterList = pageBean.getList();//有分页的获取列表
 		return "toList";
 	}
@@ -116,7 +116,7 @@ public class ProducterAction extends ActionSupport{
 		}
 		String sql="where name like '%"+hpvalue+"%' or adress like '%"+hpvalue+"%' or"+
 				" code like '%"+hpvalue+"%' or phone like '%"+hpvalue+"%'";
-		this.pageBean=producterService.queryForPage(5, page, producter,sql);
+		this.pageBean=producterService.queryForPage(10, page, producter,sql);
 		ProducterList = pageBean.getList();//有分页的获取列表
 		return "toList";
 	}

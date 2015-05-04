@@ -28,7 +28,7 @@
 					</tr>
 					<tr>
 						<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
-							class="tablestyle_title" style="text-align: center;">修改医院药房</td>
+							class="tablestyle_title" style="text-align: center;"><b>修改医院药房信息</b></td>
 					</tr>
 					<tr>
 						<td>

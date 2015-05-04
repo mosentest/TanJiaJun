@@ -34,11 +34,11 @@
 					<tr>
 						<s:if test='allorder.ordertype=="1"||allorder.ordertype=="2"'>
 							<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
-								class="tablestyle_title" style="text-align: center;">入库单详情（审核）</td>
+								class="tablestyle_title" style="text-align: center;"><b>入库单详情信息</b></td>
 						</s:if>
 						<s:elseif test='allorder.ordertype=="3"||allorder.ordertype=="4"'>
 							<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
-								class="tablestyle_title" style="text-align: center;">出库单详情（审核）</td>
+								class="tablestyle_title" style="text-align: center;"><b>出库单详情信息</b></td>
 						</s:elseif>
 					</tr>
 					<tr>

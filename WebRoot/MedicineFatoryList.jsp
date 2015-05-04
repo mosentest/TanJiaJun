@@ -106,33 +106,37 @@
 <table id="list_table" >
       <tr>
         <th width="4%"   >选择</th>
+        <s:if test='type=="fatory"'>
+        <th width="8%"   >库存量</th>             
+        </s:if>       
         <th width="10%" >药品名称</th>
+        <th width="10%"   >供应商</th>
         <th width="8%" >进货价</th>
         <th width="8%" >现售价</th>
-        <th width="8%" >原售价</th>
-        <th width="10%"   >修改时间</th>
+        <th width="8%" >原售价</th>       
         <s:if test='type=="fatory"'>
         <th width="10%"   >生产日期</th>
-        <th width="10%"   >有效期</th>
-        <th width="8%"   >数量</th>
-        </s:if>
-        <th width="10%"   >供应商</th>
+        <th width="10%"   >有效期</th>              
+        </s:if> 
+        <th width="10%"   >入库时间</th>       
         <th width="16%" >基本操作</th>
       </tr>
       <s:iterator value="medicinefatoryList">
       <tr>
      	<td><input type="checkbox" name="id" value="<s:property value="id"/>" /></td>
+     	<s:if test='type=="fatory"'>
+        <td ><s:property value="shengyuliang" /></td>             
+        </s:if>    	
      	<td ><s:property value="medname" /></td>
+     	<td ><s:property value="TProducter.name" /></td>
         <td ><s:property value="comeprice" /></td>
         <td ><s:property value="sellpricenow" /></td>
-        <td ><s:property value="sellpricebef" /></td>
-        <td ><s:property value="updatetime" /></td>
+        <td ><s:property value="sellpricebef" /></td>        
         <s:if test='type=="fatory"'>
         <td ><s:property value="producttime" /></td>
-        <td ><s:property value="valuetime" /></td>
-        <td ><s:property value="shengyuliang" /></td>
-        </s:if>
-        <td ><s:property value="TProducter.name" /></td>
+        <td ><s:property value="valuetime" /></td>             
+        </s:if>  
+        <td ><s:property value="updatetime" /></td>      
         <td>
           <s:if test='type=="fatory"'>
           <a href="javascript:getMedicinefatory('<s:property value="id" />')">修改别名</a>|

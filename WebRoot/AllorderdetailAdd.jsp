@@ -27,7 +27,7 @@
 			$("#producterid").empty();
 			$.ajax({
 				type:"POST",// 指定是post还是get
-				data:{"medicineid":checkValue},//发送到服务器的数据 
+				data:{"medicineid":checkValue},//发送到服务器的数据
 				url:"AllorderdetailHuo",//发送请求的地址
 				dataType:"JSON",
 				error:function(xmlHttpRequest, error){//如果确定能正确运行,可不写
@@ -38,6 +38,7 @@
 					//初始化一个默认值
 					priceArr[0] = 0;
 					 for(var i = 0;i<data.msg.length;i++){
+						 console.log(data.msg[i]);
 						 priceArr[i+1] = data.msg[i].price;
 						 sproducterNameArr+="<option value='"+data.msg[i].TProducter.id+"'>&nbsp;&nbsp;"+data.msg[i].TProducter.name+"→报价为"+data.msg[i].price+"元&nbsp;&nbsp;</option>"
 					 }
@@ -122,7 +123,7 @@
 			</tr>
 			<tr>
 				<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
-					class="tablestyle_title" style="text-align: center;">添加入库单药品</td>
+					class="tablestyle_title" style="text-align: center;"><b>添加入库单药品</b></td>
 			</tr>
 			<tr>
 				<td>

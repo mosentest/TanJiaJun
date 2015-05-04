@@ -25,7 +25,7 @@
 			</tr>
 			<tr>
 				<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
-					class="tablestyle_title" style="text-align: center;">添加药品</td>
+					class="tablestyle_title" style="text-align: center;"><b>添加药品信息</b></td>
 			</tr>
 			<tr>
 				<td>

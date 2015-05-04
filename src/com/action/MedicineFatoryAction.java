@@ -1,5 +1,6 @@
 package com.action;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -11,6 +12,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.service.IMedicineService;
 import com.service.IMedicinefatoryService;
 import com.service.IProducterService;
+import com.util.DebugUtil;
 import com.util.PageBean;
 
 public class MedicineFatoryAction extends ActionSupport{
@@ -81,6 +83,7 @@ public class MedicineFatoryAction extends ActionSupport{
 	}
 	// 新增提交
 	public String AddMedicineFatory() {
+		DebugUtil.debugInfo(medicinefatory);
 		medicinefatoryService.insMedicinefatory(medicinefatory);
 		return "MedicineFatoryList";
 	}
@@ -137,7 +140,7 @@ public class MedicineFatoryAction extends ActionSupport{
 
 	@SuppressWarnings("unchecked")
 	public String ListMedicineFatory() {
-		this.pageBean=medicinefatoryService.queryForPage(5, page, medicinefatory,"");
+		this.pageBean=medicinefatoryService.queryForPage(10, page, medicinefatory,"");
 		medicinefatoryList = pageBean.getList();//有分页的获取列表
 		return "toList";
 	}
@@ -154,9 +157,15 @@ public class MedicineFatoryAction extends ActionSupport{
 
 	@SuppressWarnings("unchecked")
 	public String SearchMedicineFatory() {
+		try {
+			hpvalue = new String(hpvalue.getBytes("iso8859-1"), "UTF-8");
+			DebugUtil.debugInfo(hpvalue);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		String sql="where medname like '%"+hpvalue+"%' or comeprice like '%"+hpvalue+
 						  " %' or sellpricenow like '%"+hpvalue+ " %' or valuetime like '%"+hpvalue+ " %'";
-		this.pageBean=medicinefatoryService.queryForPage(5, page, medicinefatory,sql);
+		this.pageBean=medicinefatoryService.queryForPage(10, page, medicinefatory,sql);
 		medicinefatoryList = pageBean.getList();//有分页的获取列表
 		return "toList";
 	}

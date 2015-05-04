@@ -34,11 +34,11 @@
 					<tr>
 							<s:if test='type=="fatory"'>
 								<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
-								class="tablestyle_title" style="text-align: center;">修改库存药品别名</td>
+								class="tablestyle_title" style="text-align: center;"><b>修改库存药品别名</b></td>
 							</s:if>
 							<s:elseif test='type=="price"'>
 								<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
-								class="tablestyle_title" style="text-align: center;">修改库存药品售价</td>
+								class="tablestyle_title" style="text-align: center;"><b>修改库存药品售价</b></td>
 							</s:elseif>
 					</tr>
 					<tr>

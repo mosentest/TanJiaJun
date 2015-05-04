@@ -68,7 +68,7 @@ public class ShoppingCartUtil {
 	 * 清空购物车
 	 * @param session
 	 */
-	public void removeCartInfo(HttpSession session){
+	public static void removeCartInfo(HttpSession session){
 		Enumeration<String> attributeNames = session.getAttributeNames();
 		while (attributeNames.hasMoreElements()) {
 			String nextElement = attributeNames.nextElement();

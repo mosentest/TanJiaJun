@@ -28,7 +28,7 @@
 					</tr>
 					<tr>
 						<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
-							class="tablestyle_title" style="text-align: center;">修改供应商</td>
+							class="tablestyle_title" style="text-align: center;"><b>修改供应商信息</b></td>
 					</tr>
 					<tr>
 						<td>

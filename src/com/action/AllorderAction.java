@@ -180,10 +180,10 @@ public class AllorderAction extends BaseAction {
 	// * 检验提交 药品入库单
 	// */
 	// public void validateToAddAllorder(){
-	// // if(allorderdetail.getTMedicine() == null ||
+	// if(allorderdetail.getTMedicine() == null ||
 	// allorderdetail.getTMedicine().getId() <= 0){
-	// // addFieldError("allorderdetail.TMedicine.id", "请选择药品");
-	// // }
+	// addFieldError("allorderdetail.TMedicine.id", "请选择药品");
+	// }
 	// if(allorderdetail.getTProducter()== null ||
 	// allorderdetail.getTProducter().getId() <= 0){
 	// addFieldError("allorderdetail.TProducter.id", "请选择供应商");
@@ -249,17 +249,19 @@ public class AllorderAction extends BaseAction {
 	public String AddAllorder() {
 		// TODO
 		// 1添加订单信息
+		// 2添加 订单详细表信息(关联上面1 的表，另外关联药品和供应商)
 		List<TAllorderdetail> allorderdetails = ShoppingCartUtil.getCartInfo(getSession());
 		Set<TAllorderdetail> setAllorderdetails = null;
 		if (allorderdetails != null) {
 			setAllorderdetails = new HashSet<TAllorderdetail>(allorderdetails);
 		}
 		allorder.setTAllorderdetails(setAllorderdetails);
-		allorder.setSum(ShoppingCartUtil.getCountCartInfo(getSession())+"");
+		allorder.setSum(ShoppingCartUtil.getCountCartInfo(getSession()) + "");
 		allorder.setTUser(ShoppingCartUtil.getCurrentUser(getSession()));
 		allorder.setStatus("未审核");
 		allorderService.insAllorder(allorder);
-		// 2添加 订单详细表信息(关联上面1 的表，另外关联药品和供应商)
+		// 3.清除购物车
+		ShoppingCartUtil.removeCartInfo(getSession());
 		return "AllorderList";
 	}
 
@@ -269,7 +271,7 @@ public class AllorderAction extends BaseAction {
 	}
 
 	public String UpdateAllorder() {
-		if (allorder.getStatus().equals("审核通过")) {
+		if ("审核通过".equals(allorder.getStatus())) {
 			GregorianCalendar gc = new GregorianCalendar();
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			Date d = new Date();
@@ -362,12 +364,13 @@ public class AllorderAction extends BaseAction {
 
 	@SuppressWarnings("unchecked")
 	public String ListAllorder() {
-		this.pageBean = allorderService.queryForPage(5, page, allorder, type);
+		this.pageBean = allorderService.queryForPage(10, page, allorder, type);
 		allorderList = pageBean.getList();// 有分页的获取列表
 		if (type.equals("all"))
 			return "AllList";
 		return "toList";
 	}
+
 
 	public String getAllorderA() {
 		allorder = allorderService.getAAllorder(allorder);

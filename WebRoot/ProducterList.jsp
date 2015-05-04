@@ -104,6 +104,7 @@
         <th width="16%" >电话</th>
         <th width="15%"  >邮政编号</th>
         <th width="27%">地址</th>
+        <th width="14%"  >更新时间</th>
         <th width="14%" >基本操作</th>
       </tr>
       <s:iterator value="ProducterList">
@@ -113,6 +114,7 @@
         <td ><s:property value="phone" /></td>
         <td ><s:property value="code" /></td>
         <td ><s:property value="adress" /></td>
+        <td ><s:property value="time" /></td>
         <td><a href="javascript:getProducter('<s:property value="id" />')">修改</a>|
           <a href="javascript:deleteProducter('<s:property value="id" />')">删除</a></td> 
       </tr>

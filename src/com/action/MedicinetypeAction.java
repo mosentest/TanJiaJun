@@ -1,5 +1,6 @@
 package com.action;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -7,6 +8,7 @@ import javax.annotation.Resource;
 import com.entity.TMedicinetype;
 import com.opensymphony.xwork2.ActionSupport;
 import com.service.IMedicinetypeService;
+import com.util.DebugUtil;
 import com.util.PageBean;
 
 public class MedicinetypeAction extends ActionSupport{
@@ -92,7 +94,7 @@ public class MedicinetypeAction extends ActionSupport{
 	
 	@SuppressWarnings("unchecked")
 	public String ListMedicinetype() {
-		this.pageBean=medicinetypeService.queryForPage(5, page, medicinetype,"");
+		this.pageBean=medicinetypeService.queryForPage(10, page, medicinetype,"");
 		MedicinetypeList = pageBean.getList();//有分页的获取列表
 		return "toList";
 	}
@@ -109,8 +111,14 @@ public class MedicinetypeAction extends ActionSupport{
 	
 	@SuppressWarnings("unchecked")
 	public String SearchMedicinetype() {
+		try {
+			hpvalue = new String(hpvalue.getBytes("iso8859-1"), "UTF-8");
+			DebugUtil.debugInfo(hpvalue);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		String sql="where protypename like '%"+hpvalue+"%' or remark like '%"+hpvalue+"%'";
-		this.pageBean=medicinetypeService.queryForPage(5, page, medicinetype,sql);
+		this.pageBean=medicinetypeService.queryForPage(10, page, medicinetype,sql);
 		MedicinetypeList = pageBean.getList();//有分页的获取列表
 		return "toList";
 	}

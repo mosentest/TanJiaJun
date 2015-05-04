@@ -154,6 +154,13 @@ public class TMedicinefatory implements java.io.Serializable {
 		this.jinhuoliang = jinhuoliang;
 	}
 
+	@Override
+	public String toString() {
+		return "TMedicinefatory [id=" + id + ", medname=" + medname + ", comeprice=" + comeprice + ", sellpricenow=" + sellpricenow
+				+ ", sellpricebef=" + sellpricebef + ", updatetime=" + updatetime + ", producttime=" + producttime + ", valuetime=" + valuetime
+				+ ", shengyuliang=" + shengyuliang + ", jinhuoliang=" + jinhuoliang + "]";
+	}
+
 
 
 }

@@ -32,11 +32,11 @@
 			<tr>
 						<s:if test='type=="price"'>
 						<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
-							class="tablestyle_title" style="text-align: center;">添加药品价格</td>
+							class="tablestyle_title" style="text-align: center;"><b>添加药品价格</b></td>
 						</s:if>
 						<s:elseif test='type=="date"'>
 						<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
-							class="tablestyle_title" style="text-align: center;">添加药品有效期</td>
+							class="tablestyle_title" style="text-align: center;"><b>添加药品有效期</b></td>
 						</s:elseif>
 			</tr>
 			<tr>
