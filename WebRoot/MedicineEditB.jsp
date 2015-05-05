@@ -28,7 +28,7 @@
 					</tr>
 					<tr>
 						<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
-							class="tablestyle_title" style="text-align: center;"><b>修改药品信息</b></td>
+							class="tablestyle_title" style="text-align: center;"><b>修改药品别名</b></td>
 					</tr>
 					<tr>
 						<td>
@@ -58,7 +58,7 @@
 																					</td>
 																				</tr>
 																				<tr>
-																					<td><s:textfield 	name="medicine.number" label="批号"  value="%{medicine.number}"  readonly="true" />
+																					<td><s:textfield 	name="medicine.number" label="批准文号"  value="%{medicine.number}"  readonly="true" />
 																					</td>
 																				</tr>
 																				<tr>

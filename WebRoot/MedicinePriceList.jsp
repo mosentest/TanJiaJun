@@ -109,11 +109,11 @@
         <th width="25%"   >供应商名称</th>
         <th width="25%" >药品名称</th>
         <s:if test='type=="price"'>
-        <th width="25%" >价格(/元)</th>
+        <th width="25%" >入货价格（元）</th>
         </s:if>
         <s:elseif test='type=="date"'>
          <th width="15%" >生产日期</th>
-         <th width="10%" >有效时间(/月)</th>
+         <th width="10%" >有效时间（月）</th>
          </s:elseif>
         <th width="16%" >基本操作</th>
       </tr>

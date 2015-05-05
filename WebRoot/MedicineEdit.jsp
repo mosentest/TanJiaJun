@@ -7,13 +7,79 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title></title>
 <link rel="stylesheet" type="text/css" href="css/main.css" />
+<script src="js/jquery-2.1.3.min.js"></script>
+<script language="javascript">
+	//验证表单
+	function clickForm(submitform) {
+		//文本框
+		var $number = $("#number").val();
+		//不能为空格 
+		if ($number.length == 0) {
+			alert("批准文号不能为空！");
+			return false;
+		} else {
+			var $tou = $number.substring(0, 4);
+			var $zhong = $number.substring(4, 5);
+			var $hou = $number.substring(5, 13);
+			if($tou!="国药准字"){
+				alert("批准文号格式不对！请严格按照国家药品编号来填写！\n【国药准字+1位大写字母+8位数字】");
+				return false;
+			}
+			else if(!$zhong.match("^[B]{1,2}$")){
+				alert("批准文号格式不对！请严格按照国家药品编号来填写！\n【国药准字+1位大写字母+8位数字】");
+				return false;
+			}
+			else if(!$hou.match("^[0-9]{8}$")){
+				alert("批准文号格式不对！请严格按照国家药品编号来填写！\n【国药准字+1位大写字母+8位数字】");
+				return false;
+			}
+			else if ($number.length != 13) {
+				alert("批准文号格式不对！超过13位字符");
+				return false;
+			}	
+		}
+		
+		var $name = $("#name").val();
+		if ($name.length == 0) {
+			alert("药品名字不能为空！");
+			return false;
+		} else if (!$name.match("^[\u4e00-\u9fa5a-zA-Z]{1,15}$")) {
+			alert("药品名字格式不对！\n【请输入1-15位的中文或英文字符！】");
+			return false;
+		}
+		
+		var $protypename=$("#protypename").val();
+		if($protypename == 0){
+			alert("请选择药品品种！");
+			return false;
+		}
+		
+		var $guige = $("#guige").val();
+		if ($guige.length == 0) {
+			alert("规格不能为空！");
+			return false;
+		}else if  ($guige.length > 15) {
+			alert("规格不能大于15个字符！");
+			return false;
+		}
+		
+		var $danwei = $("#danwei").val();
+		if ($danwei.length == 0) {
+			alert("单位不能为空！");
+			return false;
+		}else if  ($danwei.length > 3) {
+			alert("单位不能大于3个字符！");
+			return false;
+		}
+	}
+</script>
 </head>
 <body class="ContentBody">
 	<div id="title_bar">
 		<span id="title">系统管理&gt;&gt;药品管理&gt;&gt;修改药品</span>
 	</div>
 	<div align="center">
-		<s:form action="Medicine_Update" method="post">
+		<s:form action="Medicine_Update" method="post" onsubmit="return clickForm(this)">
 			<div class="MainDiv">
 				<table width="99%" border="0" cellpadding="0" cellspacing="0"
 					class="CContent">
@@ -58,30 +124,30 @@
 																					</td>
 																				</tr>
 																				<tr>
-																					<td><s:textfield 	name="medicine.number" label="批号"  value="%{medicine.number}"  />
+																					<td><s:textfield 	name="medicine.number" label="批准文号"  value="%{medicine.number}"  id="number"/>
 																					</td>
 																				</tr>
 																				<tr>
-																					<td><s:textfield name="medicine.name" label="药品名称"  value="%{medicine.name}"/>
+																					<td><s:textfield name="medicine.name" label="药品名称"  value="%{medicine.name}" id="name"/>
 																					</td>
 																				</tr>
 																				<tr>
 																				    <td>
 																				    	<s:select  name="medicine.TMedicinetype.protypeid"  label="药品种类" 
-																				    	 list="medicinetypes"  listKey="protypeid"  listValue="protypename"  value="%{medicine.TMedicinetype.protypeid}"  >
+																				    	 list="medicinetypes"  listKey="protypeid"  listValue="protypename"  value="%{medicine.TMedicinetype.protypeid}" id="protypename" >
 																				    	</s:select>
 																				    </td>
 																				</tr>
 																				<tr>
-																					<td><s:textfield name="medicine.danwei" label="单位"  value="%{medicine.danwei}" />
+																					<td><s:textfield name="medicine.guige" label="规格"  value="%{medicine.guige}" id="guige"/>
 																					</td>
 																				</tr>
 																				<tr>
-																					<td><s:textfield name="medicine.guige" label="规格"  value="%{medicine.guige}" />
+																					<td><s:textfield name="medicine.danwei" label="单位"  value="%{medicine.danwei}" id="danwei"/>
 																					</td>
 																				</tr>
 																				<tr>
-																					<td><s:textfield name="medicine.othername" label="别名"  value="%{medicine.othername}" />
+																					<td><s:textfield name="medicine.othername" label="别名"  value="%{medicine.othername}" id="othername"/>
 																					</td>
 																				</tr>
 																				<tr>

@@ -169,8 +169,11 @@ public class AllorderAction extends BaseAction {
 			if (allorderdetail.getTMedicine().getId() > 0 && allorderdetail.getTProducter().getId() > 0 && allorderdetail.getNum().length() > 0) {
 				allorderdetail.setTMedicine(medicineService.getAMedicine(allorderdetail.getTMedicine()));
 				allorderdetail.setTProducter(producterService.getAProducter(allorderdetail.getTProducter()));
-				session.put(user.getName() + "," + allorderdetail.getTMedicine().getId() + "," + allorderdetail.getTProducter().getId(),
-						allorderdetail);
+				if (user != null) {
+					String msg = user.getName() + "@in," + allorderdetail.getTMedicine().getId() + "," + allorderdetail.getTProducter().getId();
+					DebugUtil.debugInfo("AllorderAction:" + msg);
+					session.put(msg, allorderdetail);
+				}
 			}
 		}
 		return "success";
@@ -250,18 +253,26 @@ public class AllorderAction extends BaseAction {
 		// TODO
 		// 1添加订单信息
 		// 2添加 订单详细表信息(关联上面1 的表，另外关联药品和供应商)
-		List<TAllorderdetail> allorderdetails = ShoppingCartUtil.getCartInfo(getSession());
+		ShoppingCartUtil cartUtil = new ShoppingCartUtil("in");
+		List<TAllorderdetail> allorderdetails = cartUtil.getCartInfo(getSession());
 		Set<TAllorderdetail> setAllorderdetails = null;
 		if (allorderdetails != null) {
 			setAllorderdetails = new HashSet<TAllorderdetail>(allorderdetails);
 		}
 		allorder.setTAllorderdetails(setAllorderdetails);
-		allorder.setSum(ShoppingCartUtil.getCountCartInfo(getSession()) + "");
-		allorder.setTUser(ShoppingCartUtil.getCurrentUser(getSession()));
+		allorder.setSum(cartUtil.getCountCartInfo(getSession()) + "");
+		allorder.setTUser(cartUtil.getCurrentUser(getSession()));
 		allorder.setStatus("未审核");
+		// 修改支付方式的输入 改为select2015-5-4
+		int paytype = Integer.parseInt(allorder.getPaytype());
+		if (paytype == 1) {
+			allorder.setPaytype("现金支付");
+		} else if (paytype == 2) {
+			allorder.setPaytype("网银支付");
+		}
 		allorderService.insAllorder(allorder);
 		// 3.清除购物车
-		ShoppingCartUtil.removeCartInfo(getSession());
+		cartUtil.removeCartInfo(getSession());
 		return "AllorderList";
 	}
 
@@ -364,13 +375,15 @@ public class AllorderAction extends BaseAction {
 
 	@SuppressWarnings("unchecked")
 	public String ListAllorder() {
+		// TODO 2015-5-4
 		this.pageBean = allorderService.queryForPage(10, page, allorder, type);
+		//TODO 2015-5-5
+		getSession().setAttribute("type", type);
 		allorderList = pageBean.getList();// 有分页的获取列表
 		if (type.equals("all"))
 			return "AllList";
 		return "toList";
 	}
-
 
 	public String getAllorderA() {
 		allorder = allorderService.getAAllorder(allorder);

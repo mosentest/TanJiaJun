@@ -8,17 +8,51 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="css/main.css"/>
-
+<script src="js/jquery-2.1.3.min.js"></script>
 <title>无标题文档</title>
 <script language="javascript">
 	function selChange(){
 	    var opt = document.getElementById("ordertype").selectedIndex;
 	    document.getElementById("reason").style.display = opt==="2"?'none':'';
 	}
+	//验证表单
+	function clickForm(submitform){
+		//获取对应的输入字段
+		var $ordercode = $("#ordercode").val();
+		//判断格式
+		if(!$ordercode.match("^RK[0-9]{4,}$")){
+			//如果格式不对，显示提示
+			$("#ordercode_tip").html("单号格式不正确【例如：RK0001】");
+			//返回false
+			return false;
+		}else{
+			//否则成功，清空提示的内容
+			$("#ordercode_tip").html("");
+		}
+		//获取下拉框
+		var $paytype=$("#paytype").val();
+		if($paytype == 0){
+			alert("请选择结算方式!");
+			return false;
+		}
+		//获取下拉框
+		var $ordertype = $("#ordertype").val();
+		if($ordertype == 0){
+			alert("请选择单据类型!");
+			return false;
+		}
+		//文本框
+		var $reason = $("#reason").val();
+		if($reason.length < 5){
+			alert("入库单描述不少于5个字符!");
+			return false;
+		}
+	}
 </script>
 <%
-List<TAllorderdetail> allorderdetails = ShoppingCartUtil.getCartInfo(session);
-int countOrder = ShoppingCartUtil.getCountCartInfo(session);
+ShoppingCartUtil cartUtil = new ShoppingCartUtil("in");
+List<TAllorderdetail> allorderdetails = cartUtil.getCartInfo(session);
+int countOrder = cartUtil.getCountCartInfo(session);
 //显示购物车信息
 request.setAttribute("allorderdetails", allorderdetails);
 request.setAttribute("countOrder", countOrder);
@@ -31,7 +65,7 @@ request.setAttribute("countOrder", countOrder);
 	<span id="title" >系统管理&gt;&gt;入库管理&gt;&gt;添加入库单</span>
 </div>
 <div align="center">
-	<s:form action="Allorder_Add" method="post">
+	<s:form action="Allorder_Add" method="post"  onsubmit="return clickForm(this)">
 			<tr>
 				<td bgcolor="#A0A0A0"></td>
 			</tr>
@@ -53,20 +87,25 @@ request.setAttribute("countOrder", countOrder);
 								<table width="100%" border="0" align="center" cellpadding="4"
 									cellspacing="1" bgcolor="#DDD" class="newfont03" id="tblist">
 									<tr>
-										<td><s:textfield name="allorder.ordercode" label="单号" /></td>
+										<td><s:textfield name="allorder.ordercode" label="*单号" id="ordercode" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="ordercode_tip" style="color: red;"></span></td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
 									</tr>
 									<tr>
-										<td><s:textfield name="allorder.paytype" label="结算方式" /></td>
+										<td>
+<!-- 										<s:textfield name="allorder.paytype" label="结算方式" id="paytype" /> -->
+										<s:select name="allorder.paytype" label="*结算方式"   headerKey="0"
+					    	 			list="#{1:'现金支付',2:'网银支付'}" listKey="key"  listValue="value" headerValue="-- 请选择 --"
+					    	 			id="paytype"></s:select>
+										</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
 									</tr>
 									<tr>
 					                    <td align="center">
-					                    <s:select name="allorder.ordertype" label="单据类型"   headerKey="1"
+					                    <s:select name="allorder.ordertype" label="*单据类型"   headerKey="0"
 					    	 			list="#{1:'采购单',2:'退货单'}" listKey="key"  listValue="value" headerValue="-- 请选择 --"
 					    	 			onchange="selChange()"  id="ordertype">
 					    				</s:select></td>
@@ -75,7 +114,7 @@ request.setAttribute("countOrder", countOrder);
 										<td>&nbsp;</td>
 									</tr>
 									<tr>
-										<td><s:textarea name="allorder.orderreason" label="入库原因"  id="reason"/></td>
+										<td><s:textarea name="allorder.orderreason" label="*入库描述"  id="reason"/></td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
@@ -103,7 +142,7 @@ request.setAttribute("countOrder", countOrder);
 											<td ><s:property value="price" /></td>
 											<td ><s:property value="num" /></td>
 											<td ><s:property value="sum" /></td>
-											<td ><a href="Allorder_remove.action?sessionName=<%=ShoppingCartUtil.getCurrentUserName(session)+","%><s:property value="TMedicine.id"/><%=","%><s:property value="TProducter.id"/>">删除</a></td>
+											<td ><a href="Allorder_remove.action?sessionName=<%=cartUtil.getCurrentUserName(session)+"@in,"%><s:property value="TMedicine.id"/><%=","%><s:property value="TProducter.id"/>">删除</a></td>
 											</tr>
 										</s:iterator>
 									</table>

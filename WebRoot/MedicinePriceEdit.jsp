@@ -7,19 +7,54 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title></title>
 <script src="laydate/laydate.js"></script>
+<script src="js/jquery-2.1.3.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/main.css" />
+<script language="javascript">
+	//验证表单
+	function clickForm(submitform) {			
+		var $prodate = $("#prodate").val();
+		if ($prodate.length == 0) {
+			alert("生产日期不能为空！");
+			return false;
+		}else if (!$prodate.match("^([0-9]{4})\-([0-9]{2})\-([0-9]{2})$")) {
+			alert("生产日期的格式不对！\n【请输入正确的日期格式 yyyy-mm-dd】");
+			return false;
+		}
+		
+		var $value = $("#value").val();
+		if ($value.length == 0) {
+			alert("有效时间不能为空！");
+			return false;
+		}else if (!$value.match("^[0-9]{1,}$")) {
+			alert("有效时间的格式不对！\n【请输入正确的数字】");
+			return false;
+		}
+	}
+</script>
 </head>
 <body class="ContentBody">
 	<div id="title_bar">
 		 <s:if test='type=="price"'>
-		<span id="title">系统管理&gt;&gt;药品价格管理&gt;&gt;修改药品价格</span>
+		<span id="title">系统管理&gt;&gt;药品价格管理&gt;&gt;修改药品入货价格</span>
+		<script language="javascript">
+			function clickForm(submitform) {			
+			var $price = $("#price").val();
+			if ($price.length == 0) {
+				alert("入货价格不能为空！");
+				return false;
+			}else if (!$price.match("^[0-9]{1,}$")) {
+				alert("入货价的格式不对！\n【请输入正确的数字】");
+				return false;
+			}
+		}
+	</script>
 		</s:if>
 		 <s:elseif test='type=="date"'>
 		<span id="title">系统管理&gt;&gt;药品有效期管理&gt;&gt;修改药品有效期</span>
 		</s:elseif>
 	</div>
 	<div align="center">
-		<s:form action="MedicinePrice_Update" method="post">
+		<s:form action="MedicinePrice_Update" method="post" onsubmit="return clickForm(this)">
 			<div class="MainDiv">
 				<table width="99%" border="0" cellpadding="0" cellspacing="0"
 					class="CContent">
@@ -81,17 +116,17 @@
 																				</tr>
 																				<s:if test='type=="price"'>
 																				<tr>
-																					<td><s:textfield name="medicineprice.price" label="价格"  value="%{medicineprice.price}" />
+																					<td><s:textfield name="medicineprice.price" label="入货价格（元）"  value="%{medicineprice.price}" id="price"/>
 																					</td>
 																				</tr>
 																				</s:if>
 																				<s:elseif test='type=="date"'>
 																				<tr>
-																				<td><s:textfield  name="medicineprice.prodate"  label="生产日期"   onclick="laydate()" value="%{medicineprice.prodate}"  />
+																				<td><s:textfield  name="medicineprice.prodate"  label="生产日期"   onclick="laydate()" value="%{medicineprice.prodate}"  id="prodate"/>
 																				</td>
 																				</tr>
 																				<tr>
-																					<td><s:textfield name="medicineprice.value" label="有效时间（/月）"  value="%{medicineprice.value}" />
+																					<td><s:textfield name="medicineprice.value" label="有效时间（月）"  value="%{medicineprice.value}" id="value"/>
 																					</td>
 																				</tr>
 																				</s:elseif>

@@ -5,8 +5,50 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="css/main.css"/>
-
+<script src="js/jquery-2.1.3.min.js"></script>
 <title>无标题文档</title>
+<script language="javascript">
+	//验证表单
+	function clickForm(submitform) {
+		//文本框
+		var $name = $("#name").val();
+		//不能为空格 
+		if ($name.length == 0) {
+			alert("医院药房名字不能为空！");
+			return false;
+		} else if (!$name.match("^[\u4e00-\u9fa5a-zA-Z]{3,15}$")) {
+			alert("医院药房名字格式不对！\n【请输入3-15位的中文或英文字符】");
+			return false;
+		}
+		
+		var $manager = $("#manager").val();
+		if ($manager.length == 0) {
+			alert("负责人不能为空！");
+			return false;
+		} else if (!$manager.match("^[\u4e00-\u9fa5a-zA-Z]{1,5}$")) {
+			alert("负责人格式不对！\n【请输入1-5位的中文或英文字符！】");
+			return false;
+		}
+		
+		var $phone = $("#phone").val();
+		if ($phone.length == 0) {
+			alert("电话不能为空！");
+			return false;
+		} else if (!$phone.match("^[0-9]{3,11}$")) {
+			alert("电话格式不对！\n【请输入3-11位数字】");
+			return false;
+		}
+	
+		var $adress = $("#adress").val();
+		if ($adress.length < 5) {
+			alert("地址不少于5个字符！");
+			return false;
+		}else if ($adress.length > 30) {
+			alert("地址不能大于30个字符！");
+			return false;
+		}
+	}
+</script>
 </head>
 
 <body>
@@ -14,7 +56,7 @@
 	<span id="title" >系统管理&gt;&gt;医院药房管理&gt;&gt;添加医院药房</span>
 </div>
 <div align="center">
-	<s:form action="Hospital_Add" method="post">
+	<s:form action="Hospital_Add" method="post" onsubmit="return clickForm(this)">
 			<tr>
 				<td bgcolor="#A0A0A0"></td>
 			</tr>
@@ -39,21 +81,21 @@
 										<td colspan="5">以下带*为必填项：</td>
 									</tr>
 									<tr>
-										<td><s:textfield name="hospital.name" label="*医院名称" />
+										<td><s:textfield name="hospital.name" label="*医院名称" id="name"/>
 										</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
 									</tr>
 									<tr>
-										<td><s:textfield name="hospital.manager" label="*负责人" />
+										<td><s:textfield name="hospital.manager" label="*负责人" id="manager"/>
 										</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
 									</tr>
 									<tr>
-										<td><s:textfield name="hospital.phone" label="*电话" />
+										<td><s:textfield name="hospital.phone" label="*电话" id="phone"/>
 										</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
@@ -61,7 +103,7 @@
 									</tr>
 									<tr>
 										<td><s:textarea name="hospital.adress" cols="45" rows="5"
-												label="地址" />
+												label="地址" id="adress"/>
 										</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>

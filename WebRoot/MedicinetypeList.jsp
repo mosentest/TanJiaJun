@@ -103,14 +103,18 @@
 <table id="list_table" >
       <tr>
         <th width="4%"   >选择</th>
-        <th width="40%" >品种名称</th>
-        <th width="40%"  >更新时间</th>
+        <th width="10%" >品种编号</th>
+        <th width="10%" >品种名称</th>
+        <th width="20%" >备注说明</th>
+        <th width="20%"  >更新时间</th>
         <th width="20%" >基本操作</th>
       </tr>
       <s:iterator value="MedicinetypeList">
       <tr>
      	<td><input type="checkbox" name="protypeid" value="<s:property value="protypeid"/>" /></td>
+     	<td ><s:property value="protypeid" /></td>
         <td ><s:property value="protypename" /></td>
+        <td ><s:property value="remark" /></td>
         <td ><s:property value="time" /></td>
         <td><a href="javascript:getMedicinetype('<s:property value="protypeid" />')">修改</a>|
           <a href="javascript:deleteMedicinetype('<s:property value="protypeid" />')">删除</a></td> 

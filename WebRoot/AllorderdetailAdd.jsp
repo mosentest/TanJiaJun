@@ -22,8 +22,8 @@
 		
 		var priceArr = null;
 		
-		$("#medicine-id").change(function(){
-			var checkValue=$("#medicine-id").val();  //获取Select选择的Value
+		$("#medicineid").change(function(){
+			var checkValue=$("#medicineid").val();  //获取Select选择的Value
 			$("#producterid").empty();
 			$.ajax({
 				type:"POST",// 指定是post还是get
@@ -34,7 +34,7 @@
 				},
 				success:function(data){
 					priceArr = new Array();
-					var sproducterNameArr="<option value='-1'>--请选择--</option>";
+					var sproducterNameArr="<option value='-1'>---供应商报价---</option>";
 					//初始化一个默认值
 					priceArr[0] = 0;
 					 for(var i = 0;i<data.msg.length;i++){
@@ -45,7 +45,7 @@
 					$("#producterid").append(sproducterNameArr);
 				}
 			});
-		});//$("#medicine-id").change(function(){
+		});//$("#medicineid").change(function(){
 		
 		//供应商获取
 		$("#producterid").change(function(){
@@ -105,6 +105,24 @@
 	    document.getElementById("sum").value=num*price;
 	}//function setNumChange(){
 </script>
+
+<script language="javascript">
+	//验证表单
+	function clickForm(submitform) {
+		var $medicineid=$("#medicineid").val();
+		if($medicineid == 0){
+			alert("请选择需要入库的药品!");
+			return false;
+		}
+		
+		var $price = $("#price").val();
+		if ($price.length == 0) {
+			alert("价格不能为空！");
+			return false;
+		}
+	}
+</script>
+
 </head>
 
 <body>
@@ -112,7 +130,7 @@
 	<span id="title" >系统管理&gt;&gt;入库管理&gt;&gt;添加入库单药品</span>
 </div>
 <div align="center">
-	<s:form id="allorder-detail-add" action="AllordertoAdd" method="POST">
+	<s:form id="allorder-detail-add" action="AllordertoAdd" method="POST" onsubmit="return clickForm(this)">
 			<tr>
 				<td bgcolor="#A0A0A0"></td>
 			</tr>
@@ -138,8 +156,8 @@
 									</tr>
 								   <tr>
 					                    <td align="center">
-					                    <s:select name="allorderdetail.TMedicine.id" label="*药品名"   headerKey="1"
-					    	 			list="medicines"  listKey="id"  listValue="name" headerValue="-- 请选择 --"  id="medicine-id" 
+					                    <s:select name="allorderdetail.TMedicine.id" label="*药品名"   headerKey="0"
+					    	 			list="medicines"  listKey="id"  listValue="name" headerValue="-- 请选择 --"  id="medicineid"
 					    	 			 value="%{allorderdetail.TMedicine.id}">
 					    				</s:select></td>
 					    				<td>&nbsp;</td>
@@ -147,7 +165,7 @@
 										<td>&nbsp;</td>
                                    </tr>
                                     <tr>
-					                    <td class="tdLabel"><label for="medicine-id" class="label">*供应商:</label></td>
+					                    <td class="tdLabel"><label for="medicineid" class="label">*供应商:</label></td>
 					                    <td id="p-tip">
 					                    <select name="allorderdetail.TProducter.id" id="producterid"></select>
 					                    </td>
@@ -156,7 +174,7 @@
 										<td>&nbsp;</td>
                                    </tr>
 									<tr>
-										<td><s:textfield name="allorderdetail.price" label="*价格"  readonly="true" id="price"/></td>
+										<td><s:textfield name="allorderdetail.price" label="*入库价格（元）"  readonly="true" id="price"/></td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>

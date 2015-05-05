@@ -104,7 +104,7 @@
 <table id="list_table" >
       <tr>
         <th width="4%"   >选择</th>
-        <th width="10%"   >批号</th>
+        <th width="10%"   >批准文号</th>
         <th width="12%" >药品名称</th>
         <th width="10%"   >种类</th>
         <th width="8%"   >规格</th>

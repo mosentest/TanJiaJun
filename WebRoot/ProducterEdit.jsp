@@ -7,13 +7,56 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title></title>
 <link rel="stylesheet" type="text/css" href="css/main.css" />
+<script src="js/jquery-2.1.3.min.js"></script>
+<script language="javascript">
+	//验证表单
+	function clickForm(submitform) {
+		//文本框
+		var $name = $("#name").val();
+		//不能为空格 
+		if ($name.length == 0) {
+			alert("供应商名字不能为空！");
+			return false;
+		} else if (!$name.match("^[\u4e00-\u9fa5a-zA-Z]{3,15}$")) {
+			alert("供应商名字格式不对！\n【请输入3-15位的中文或英文字符】");
+			return false;
+		}
+
+		var $phone = $("#phone").val();
+		if ($phone.length == 0) {
+			alert("电话不能为空！");
+			return false;
+		} else if (!$phone.match("^[0-9]{3,11}$")) {
+			alert("电话格式不对！\n【请输入3-11位数字】");
+			return false;
+		}
+		
+		var $code = $("#code").val();
+		if ($code.length == 0) {
+			alert("邮政编号不能为空！");
+			return false;
+		}else if (!$code.match("^[0-9]{6}$")) {
+			alert("邮政编号格式不对！\n【请输入6位数字】");
+			return false;
+		}
+
+		var $adress = $("#adress").val();
+		if ($adress.length < 5) {
+			alert("地址不少于5个字符！");
+			return false;
+		}else if ($adress.length > 30) {
+			alert("地址不能大于30个字符！");
+			return false;
+		}
+	}
+</script>
 </head>
 <body class="ContentBody">
 	<div id="title_bar">
 		<span id="title">系统管理&gt;&gt;供应商管理&gt;&gt;修改供应商</span>
 	</div>
 	<div align="center">
-		<s:form action="Producter_Update" method="post">
+		<s:form action="Producter_Update" method="post" onsubmit="return clickForm(this)">
 			<div class="MainDiv">
 				<table width="99%" border="0" cellpadding="0" cellspacing="0"
 					class="CContent">
@@ -28,7 +71,7 @@
 					</tr>
 					<tr>
 						<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
-							class="tablestyle_title" style="text-align: center;"><b>修改供应商信息</b></td>
+							class="tablestyle_title" style="text-align: center;"><b>修改供应商信息</b></td>						
 					</tr>
 					<tr>
 						<td>
@@ -60,19 +103,20 @@
 																				</tr>
 																				<tr>
 																					<td><s:textfield 
-																							name="producter.name" label="名称" />
+																							name="producter.name" label="名称" id="name"/>
+																					</td>
+																					
+																				</tr>
+																				<tr>
+																					<td><s:textfield name="producter.phone" label="电话" id="phone"/>
 																					</td>
 																				</tr>
 																				<tr>
-																					<td><s:textfield name="producter.phone" label="电话" />
+																					<td><s:textfield name="producter.code" label="邮政编码" id="code"/>
 																					</td>
 																				</tr>
 																				<tr>
-																					<td><s:textfield name="producter.code" label="邮政编码" />
-																					</td>
-																				</tr>
-																				<tr>
-																					<s:textarea name="producter.adress" cols="45" rows="5" label="地址" />
+																					<s:textarea name="producter.adress" cols="45" rows="5" label="地址" id="adress"/>
 																				</tr>
 																			</table> <br />
 																		</td>

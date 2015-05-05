@@ -5,8 +5,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" type="text/css" href="css/main.css"/>
-
+<script src="js/jquery-2.1.3.min.js"></script>
 <title>无标题文档</title>
+<script language="javascript">
+	//验证表单
+	function clickForm(submitform) {
+		var $protypename = $("#protypename").val();
+		if ($protypename.length == 0) {
+			alert("品种名称不能为空！");
+			return false;
+		} else if (!$protypename.match("^[\u4e00-\u9fa5a-zA-Z]{1,10}$")) {
+			alert("品种名称格式不对！\n【请输入1-10位的中文或英文字符！】");
+			return false;
+		}
+	}
+</script>
 </head>
 
 <body>
@@ -14,7 +27,7 @@
 	<span id="title" >系统管理&gt;&gt;品种管理&gt;&gt;添加品种</span>
 </div>
 <div align="center">
-	<s:form action="Medicinetype_Add" method="post">
+	<s:form action="Medicinetype_Add" method="post" onsubmit="return clickForm(this)">
 			<tr>
 				<td bgcolor="#A0A0A0"></td>
 			</tr>
@@ -39,7 +52,14 @@
 										<td colspan="5">以下带*为必填项：</td>
 									</tr>
 									<tr>
-										<td><s:textfield name="medicinetype.protypename" label="*品种名称" />
+										<td><s:textfield name="medicinetype.protypename" label="*品种名称" id="protypename"/>
+										</td>
+										<td>&nbsp;</td>
+										<td>&nbsp;</td>
+										<td>&nbsp;</td>
+									</tr>
+									<tr>
+										<td><s:textfield name="medicinetype.remark" label="备注说明" id="remark"/>
 										</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
