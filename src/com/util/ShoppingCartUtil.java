@@ -65,7 +65,7 @@ public class ShoppingCartUtil {
 			String nextElement = attributeNames.nextElement();
 			// 判断是哪一个用户的购物车
 			String prefix = getCurrentUserName(session) + getType();
-			System.out.println(prefix);
+//			System.out.println(prefix);
 			if (nextElement.startsWith(prefix)) {
 				// 保存信息
 				TAllorderdetail allorderdetail = (TAllorderdetail) session.getAttribute(nextElement);
@@ -88,7 +88,7 @@ public class ShoppingCartUtil {
 			String nextElement = attributeNames.nextElement();
 			// 判断是哪一个用户的购物车
 			String prefix = getCurrentUserName(session) + getType();
-			System.out.println(prefix);
+//			System.out.println(prefix);
 			if (nextElement.startsWith(prefix)) {
 				// 删除信息
 				session.removeAttribute(nextElement);
@@ -109,7 +109,7 @@ public class ShoppingCartUtil {
 			String nextElement = attributeNames.nextElement();
 			// 判断是哪一个用户的购物车
 			String prefix = getCurrentUserName(session) + getType();
-			System.out.println(prefix);
+//			System.out.println(prefix);
 			if (nextElement.startsWith(prefix)) {
 				// 保存信息
 				TAllorderdetail allorderdetail = (TAllorderdetail) session.getAttribute(nextElement);

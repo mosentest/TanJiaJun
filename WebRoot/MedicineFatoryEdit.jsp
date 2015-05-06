@@ -84,15 +84,15 @@
 																				</tr>
 																				<s:if test='type=="price"'>
 																				<tr>
-																					<td><s:textfield name="medicinefatory.comeprice" label="进货价"  value="%{medicinefatory.comeprice}"  readonly="true"/>
+																					<td><s:textfield name="medicinefatory.comeprice" label="入货价（元）"  value="%{medicinefatory.comeprice}"  readonly="true"/>
 																					</td>
 																				</tr>
 																				<tr>
-																					<td><s:textfield name="medicinefatory.sellpricenow" label="现售价" />
+																					<td><s:textfield name="medicinefatory.sellpricenow" label="现售价（元）" />
 																					</td>
 																				</tr>
 																				<tr>
-																					<td><s:textfield name="medicinefatory.sellpricebef" label="原售价"  value="%{medicinefatory.sellpricenow}"  readonly="true"/>
+																					<td><s:textfield name="medicinefatory.sellpricebef" label="原售价（元）"  value="%{medicinefatory.sellpricenow}"  readonly="true"/>
 																					</td>
 																				</tr>
 																				</s:if>

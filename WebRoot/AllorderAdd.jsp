@@ -22,7 +22,7 @@
 		//判断格式
 		if(!$ordercode.match("^RK[0-9]{4,}$")){
 			//如果格式不对，显示提示
-			$("#ordercode_tip").html("单号格式不正确【例如：RK0001】");
+			$("#ordercode_tip").html("单号格式不正确！！【例如：RK0001】");
 			//返回false
 			return false;
 		}else{

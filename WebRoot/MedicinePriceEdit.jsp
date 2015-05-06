@@ -25,8 +25,10 @@
 		if ($value.length == 0) {
 			alert("有效时间不能为空！");
 			return false;
-		}else if (!$value.match("^[0-9]{1,}$")) {
-			alert("有效时间的格式不对！\n【请输入正确的数字】");
+		}else if (!$value.match("^[1-9]{1}$")
+				&& !$value.match("^([1-2]{1})\([0-9]{0,1})$")
+				&& !$value.match("^([3]{1})\([0-6]{1})$")) {
+			alert("有效时间的格式或规则不对！\n【请输入不大于36的数字】");
 			return false;
 		}
 	}
@@ -42,8 +44,8 @@
 			if ($price.length == 0) {
 				alert("入货价格不能为空！");
 				return false;
-			}else if (!$price.match("^[0-9]{1,}$")) {
-				alert("入货价的格式不对！\n【请输入正确的数字】");
+			}else if (!$price.match("^([1-9]{1})\([0-9]{0,3})$")) {
+				alert("入货价的格式不对！\n【请输入不大于4位的数字】");
 				return false;
 			}
 		}

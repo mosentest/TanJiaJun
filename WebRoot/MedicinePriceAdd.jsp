@@ -11,34 +11,36 @@
 <title>无标题文档</title>
 <script language="javascript">
 	//验证表单
-	function clickForm(submitform) {	
-		var $medName=$("#medName").val();
-		if($medName == 0){
+	function clickForm(submitform) {
+		var $medName = $("#medName").val();
+		if ($medName == 0) {
 			alert("请选择药品！");
 			return false;
 		}
-		
-		var $proName=$("#proName").val();
-		if($proName == 0){
+
+		var $proName = $("#proName").val();
+		if ($proName == 0) {
 			alert("请选择供应商！");
 			return false;
 		}
-		
+
 		var $prodate = $("#prodate").val();
 		if ($prodate.length == 0) {
 			alert("生产日期不能为空！");
 			return false;
-		}else if (!$prodate.match("^([0-9]{4})\-([0-9]{2})\-([0-9]{2})$")) {
+		} else if (!$prodate.match("^([0-9]{4})\-([0-9]{2})\-([0-9]{2})$")) {
 			alert("生产日期的格式不对！\n【请输入正确的日期格式 yyyy-mm-dd】");
 			return false;
 		}
-		
+
 		var $value = $("#value").val();
 		if ($value.length == 0) {
 			alert("有效时间不能为空！");
 			return false;
-		}else if (!$value.match("^[0-9]{1,}$")) {
-			alert("有效时间的格式不对！\n【请输入正确的数字】");
+		} else if (!$value.match("^[1-9]{1}$")
+				&& !$value.match("^([1-2]{1})\([0-9]{0,1})$")
+				&& !$value.match("^([3]{1})\([0-6]{1})$")) {
+			alert("有效时间的格式或规则不对！\n【请输入不大于36的数字】");
 			return false;
 		}
 
@@ -51,29 +53,29 @@
 		<s:if test='type=="price"'>
 			<span id="title">系统管理&gt;&gt;药品价格管理&gt;&gt;添加药品价格</span>
 			<script language="javascript">
-			function clickForm(submitform) {
-				var $medName=$("#medName").val();
-				if($medName == 0){
-					alert("请选择药品！");
-					return false;
+				function clickForm(submitform) {
+					var $medName = $("#medName").val();
+					if ($medName == 0) {
+						alert("请选择药品！");
+						return false;
+					}
+
+					var $proName = $("#proName").val();
+					if ($proName == 0) {
+						alert("请选择供应商！");
+						return false;
+					}
+
+					var $price = $("#price").val();
+					if ($price.length == 0) {
+						alert("入货价格不能为空！");
+						return false;
+					} else if (!$price.match("^([1-9]{1})\([0-9]{0,})(\.[0-9]{0,2})$") &&!$price.match("^([0]{1})\.([0-9]{1})\([1-9]{1})$") && !$price.match("^([0]{1})\.([1-9]{1})\([0-9]{0,1})$")) {
+						alert("入货价格的格式不对！\n【请输入整数不大于4位数，不超过2位小数点的非0正数】");
+						return false;
+					}
 				}
-				
-				var $proName=$("#proName").val();
-				if($proName == 0){
-					alert("请选择供应商！");
-					return false;
-				}
-				
-			var $price = $("#price").val();
-			if ($price.length == 0) {
-				alert("入货价格不能为空！");
-				return false;
-			}else if (!$price.match("^[0-9]{1,}$")) {
-				alert("入货价的格式不对！\n【请输入正确的数字】");
-				return false;
-			}
-		}
-	</script>
+			</script>
 		</s:if>
 		<s:elseif test='type=="date"'>
 			<span id="title">系统管理&gt;&gt;药品有效期管理&gt;&gt;添加药品有效期</span>
@@ -114,9 +116,9 @@
 									</tr>
 									<tr>
 										<td align="center"><s:select
-												name="medicineprice.TMedicine.id" label="*药品名称" headerKey="0"
-												list="medicines" listKey="id" listValue="name"
-												headerValue="-- 请选择 --" id="medName" >
+												name="medicineprice.TMedicine.id" label="*药品名称"
+												headerKey="0" list="medicines" listKey="id" listValue="name"
+												headerValue="-- 请选择 --" id="medName">
 											</s:select></td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
@@ -134,8 +136,8 @@
 									</tr>
 									<s:if test='type=="price"'>
 										<tr>
-											<td><s:textfield name="medicineprice.price" label="*入货价格（元）"
-													id="price" /></td>
+											<td><s:textfield name="medicineprice.price"
+													label="*入货价格（元）" id="price" /></td>
 											<td>&nbsp;</td>
 											<td>&nbsp;</td>
 											<td>&nbsp;</td>

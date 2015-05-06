@@ -6,15 +6,19 @@
     <constant name="struts.i18n.encoding" value="UTF-8"></constant> 
     <constant name="struts.devMode" value="true"></constant>
   <package  name="promodel" extends="struts-default,json-default">
+  
+		<!--入库 -->
   	     <action name="Allorderdetailadd"
                 class="com.action.AllorderAction" method="toAddAllorderdetail" >
                 <result name="success">AllorderdetailAdd.jsp</result>
          </action>
          
-  	     <action name="AllordertoAddB"
+		<!--出库 -->
+  	     <action name="AllordertoAddOut"
                 class="com.action.AllorderAction" method="toAddAllorderdetail" >
                 <result name="success">AllorderdetailAdd.jsp</result>
          </action>
+         
          <action name="*List" 
                 class="com.action.{1}Action" method="List{1}" >
                 <result name="toList">{1}List.jsp</result>

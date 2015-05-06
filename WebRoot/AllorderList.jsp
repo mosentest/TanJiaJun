@@ -107,7 +107,7 @@
         <li><img src="images/add.gif" width="10" height="10"  /><a href="${pageContext.request.contextPath }/Allorderdetailadd"> 添加入库单</a></li>
 		</s:if>
 		<s:elseif test='type=="out"'>
-		<li><img src="images/add.gif" width="10" height="10"  /><a href="${pageContext.request.contextPath }/AllordertoAddB"> 添加出库单</a></li>
+		<li><img src="images/add.gif" width="10" height="10"  /><a href="${pageContext.request.contextPath }/AllordertoAddOut"> 添加出库单</a></li>
 		</s:elseif>
     </ul>
 </div>

@@ -70,6 +70,8 @@ public class AllorderAction extends BaseAction {
 
 	private String sessionName;
 
+	private List<TMedicinefatory> medicinefatory;
+
 	@Resource(name = "allorderService")
 	public void setAllorderService(IAllorderService allorderService) {
 		this.allorderService = allorderService;
@@ -164,38 +166,35 @@ public class AllorderAction extends BaseAction {
 	public String toAddAllorder() {
 		Map session = ActionContext.getContext().getSession();
 		TUser user = (TUser) session.get("loginUser");
-		// 药品入库规则(用户名字,药物编号,供应商编号)
-		if (allorderdetail != null && allorderdetail.getTMedicine() != null && allorderdetail.getTProducter() != null) {
-			if (allorderdetail.getTMedicine().getId() > 0 && allorderdetail.getTProducter().getId() > 0 && allorderdetail.getNum().length() > 0) {
-				allorderdetail.setTMedicine(medicineService.getAMedicine(allorderdetail.getTMedicine()));
-				allorderdetail.setTProducter(producterService.getAProducter(allorderdetail.getTProducter()));
-				if (user != null) {
-					String msg = user.getName() + "@in," + allorderdetail.getTMedicine().getId() + "," + allorderdetail.getTProducter().getId();
-					DebugUtil.debugInfo("AllorderAction:" + msg);
-					session.put(msg, allorderdetail);
+		if (user != null) {
+			//判断用户成功，获取到相关信息
+			if ("in".equals(getSession().getAttribute("type"))) {
+				//入库
+				// 药品入库规则(用户名字,药物编号,供应商编号)
+				if (allorderdetail != null && allorderdetail.getTMedicine() != null && allorderdetail.getTProducter() != null) {
+					if (allorderdetail.getTMedicine().getId() > 0 && allorderdetail.getTProducter().getId() > 0
+							&& allorderdetail.getNum().length() > 0) {
+						allorderdetail.setTMedicine(medicineService.getAMedicine(allorderdetail.getTMedicine()));
+						allorderdetail.setTProducter(producterService.getAProducter(allorderdetail.getTProducter()));
+						if (user != null) {
+							String msg = user.getName() + "@in," + allorderdetail.getTMedicine().getId() + ","
+									+ allorderdetail.getTProducter().getId();
+							DebugUtil.debugInfo("AllorderAction:" + msg);
+							session.put(msg, allorderdetail);
+						}
+					}
 				}
+			} else if ("out".equals(getSession().getAttribute("type"))) {
+				// TODO 出库
 			}
 		}
 		return "success";
 	}
 
-	// /**
-	// * 检验提交 药品入库单
-	// */
-	// public void validateToAddAllorder(){
-	// if(allorderdetail.getTMedicine() == null ||
-	// allorderdetail.getTMedicine().getId() <= 0){
-	// addFieldError("allorderdetail.TMedicine.id", "请选择药品");
-	// }
-	// if(allorderdetail.getTProducter()== null ||
-	// allorderdetail.getTProducter().getId() <= 0){
-	// addFieldError("allorderdetail.TProducter.id", "请选择供应商");
-	// }
-	// if(allorderdetail.getNum().length() > 0){
-	// addFieldError("allorderdetail.num","请输入数量");
-	// }
-	// }
-
+	/**
+	 * 删除购物车
+	 * @return
+	 */
 	public String removeAllorder() {
 		Map session = ActionContext.getContext().getSession();
 		try {
@@ -209,35 +208,28 @@ public class AllorderAction extends BaseAction {
 	}
 
 	public String toAddAllorderdetail() {
-		// 药品
-		medicines = medicineService.getMedicine();
-		// 供应商
-		producters = producterService.getProducter();
-		String hql = "";
-		if (allorderdetail != null) {
-
-			hql = " where TMedicine.id =" + medicineid + " and price!=null";
-			medprices = medicinepriceService.getMedicinePrices(hql);
-			// 重构代码，代码有冗余了。
-			show();
-		} else {
-			// 添加入库单药品
-			medprices = medicinepriceService.getMedicinePrice();
-			show();
+		// TODO 2015-5-6
+		if ("in".equals(getSession().getAttribute("type"))) {
+			// 药品
+			medicines = medicineService.getMedicine();
+		} else if ("out".equals(getSession().getAttribute("type"))) {
+			//TODO
+			medicinefatory = medicinefatoryService.getMedicinefatory();
+			for(int i=0;i<medicinefatory.size();i++){
+				DebugUtil.debugInfo(medicinefatory.get(i).getMedname()+"----");
+				DebugUtil.debugInfo(medicinefatory.get(i).getTMedicine().getId());
+			}
 		}
+
 		return "success";
 	}
 
-	private void show() {
-		for (TMedpromiddle mp : medprices) {
-			for (TProducter p : producters) {
-				// 本身 你这里代码逻辑错了 ----现在修改正确
-				// TODO
-				if (mp.getTProducter().getId() == p.getId()) {
-					mp.getTProducter().setName(p.getName());
-				}
-			}
-		}
+	public List<TMedicinefatory> getMedicinefatory() {
+		return medicinefatory;
+	}
+
+	public void setMedicinefatory(List<TMedicinefatory> medicinefatory) {
+		this.medicinefatory = medicinefatory;
 	}
 
 	public TAllorderdetail getAllorderdetail() {
@@ -250,7 +242,6 @@ public class AllorderAction extends BaseAction {
 
 	// 新增提交
 	public String AddAllorder() {
-		// TODO
 		// 1添加订单信息
 		// 2添加 订单详细表信息(关联上面1 的表，另外关联药品和供应商)
 		ShoppingCartUtil cartUtil = new ShoppingCartUtil("in");
@@ -375,9 +366,9 @@ public class AllorderAction extends BaseAction {
 
 	@SuppressWarnings("unchecked")
 	public String ListAllorder() {
-		// TODO 2015-5-4
 		this.pageBean = allorderService.queryForPage(10, page, allorder, type);
-		//TODO 2015-5-5
+		// TODO 2015-5-5
+		DebugUtil.debugInfo("2015-5-5->" + type);
 		getSession().setAttribute("type", type);
 		allorderList = pageBean.getList();// 有分页的获取列表
 		if (type.equals("all"))

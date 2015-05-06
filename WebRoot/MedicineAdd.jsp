@@ -25,7 +25,7 @@
 				alert("批准文号格式不对！请严格按照国家药品编号来填写！\n【国药准字+1位大写字母+8位数字】");
 				return false;
 			}
-			else if(!$zhong.match("^[B]{1,2}$")){
+			else if(!$zhong.match("^[B]{1}$")){
 				alert("批准文号格式不对！请严格按照国家药品编号来填写！\n【国药准字+1位大写字母+8位数字】");
 				return false;
 			}

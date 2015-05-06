@@ -15,36 +15,36 @@ import com.service.IProducterService;
 import com.util.DebugUtil;
 import com.util.PageBean;
 
-public class MedicinePriceAction extends ActionSupport{
+public class MedicinePriceAction extends ActionSupport {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8327717102113325276L;
-	
+
 	private IMedicineService medicineService;
 
 	private TMedpromiddle medicineprice;
-	
+
 	private IProducterService producterService;
-	
+
 	private IMedicinePriceService medicinepriceService;
-	
+
 	private List<TMedicine> medicines;
-	
+
 	private List<TProducter> producters;
 
-	@Resource(name="medicineService")
+	@Resource(name = "medicineService")
 	public void setMedicineService(IMedicineService MedicineService) {
 		this.medicineService = MedicineService;
 	}
 
-	@Resource(name="producterService")
+	@Resource(name = "producterService")
 	public void setProducterService(IProducterService producterService) {
 		this.producterService = producterService;
 	}
 
-	@Resource(name="medicinepriceService")
+	@Resource(name = "medicinepriceService")
 	public void setMedicinepriceService(IMedicinePriceService medicinepriceService) {
 		this.medicinepriceService = medicinepriceService;
 	}
@@ -73,55 +73,67 @@ public class MedicinePriceAction extends ActionSupport{
 		this.producters = producters;
 	}
 
-	/**	// 跳转新增页面
-	public String toAddProduct() {
-		return "toAdd";
-	}*/
-	public String toAddMedicinePrice(){
-		medicines=medicineService.getMedicine();
-		producters=producterService.getProducter();
+	/**
+	 * // 跳转新增页面 public String toAddProduct() { return "toAdd"; }
+	 */
+	public String toAddMedicinePrice() {
+		medicines = medicineService.getMedicine();
+		producters = producterService.getProducter();
 		return "success";
 	}
-	
+
 	/**
-	 *  新增提交
+	 * 新增提交
+	 * 
 	 * @return
 	 */
 	public String AddMedicinePrice() {
-		String hql="where  TMedicine.id="+medicineprice.getTMedicine().getId()
-							+" and TProducter.id="+medicineprice.getTProducter().getId() ;
+		String hql = "where  TMedicine.id=" + medicineprice.getTMedicine().getId() + " and TProducter.id=" + medicineprice.getTProducter().getId();
 		List<TMedpromiddle> medicineprice2 = medicinepriceService.getMedicinePrices(hql);
-		//TODO2015-5-3
-		if(medicineprice2.size()>0){
-			if("price".equals(type))
-				//价格
-				medicineprice2.get(0).setPrice(medicineprice.getPrice());
-			else{
-				//生产时间
+		// TODO2015-5-3
+		if (medicineprice2.size() > 0) {
+			if ("price".equals(type)) {
+				// 价格
+				
+	    // TODO2015-5-6  自动添加价格小数点后2位
+				String temp = medicineprice.getPrice();
+				String[] chaifen = new String[2];
+				chaifen = temp.split("\\.");
+				if(chaifen.length==1){
+					temp=chaifen[0]+".00";
+				}else if(chaifen[1].length() == 1){
+					chaifen[1]=chaifen[1]+"0";
+					temp = chaifen[0]+"."+chaifen[1];
+				}
+
+//				medicineprice2.get(0).setPrice(medicineprice.getPrice());
+			    medicineprice2.get(0).setPrice(temp);
+				
+			} else {
+				// 生产时间
 				medicineprice2.get(0).setProdate(medicineprice.getProdate());
-				//有效时间
+				// 有效时间
 				medicineprice2.get(0).setValue(medicineprice.getValue());
 			}
-			medicineprice=medicineprice2.get(0);
-			//更新时间
+			medicineprice = medicineprice2.get(0);
+			// 更新时间
 			medicinepriceService.uptMedicinePrice(medicineprice);
-		}else
-			//插入数据库
+		} else
+			// 插入数据库
 			medicinepriceService.insMedicinePrice(medicineprice);
 		return "MedicinePriceList";
 	}
 
 	public String DelMedicinePrice() {
-		if(type.equals("price")){
-			medicineprice=medicinepriceService.getAMedicinePrice(medicineprice);
+		if (type.equals("price")) {
+			medicineprice = medicinepriceService.getAMedicinePrice(medicineprice);
 			medicineprice.setPrice(null);
-			medicinepriceService.uptMedicinePrice(medicineprice);	
-			//medicinepriceService.delMedicinePrice(medicineprice);
-		}
-		else{
-			medicineprice=medicinepriceService.getAMedicinePrice(medicineprice);
+			medicinepriceService.uptMedicinePrice(medicineprice);
+			// medicinepriceService.delMedicinePrice(medicineprice);
+		} else {
+			medicineprice = medicinepriceService.getAMedicinePrice(medicineprice);
 			medicineprice.setProdate(null);
-			medicinepriceService.uptMedicinePrice(medicineprice);	
+			medicinepriceService.uptMedicinePrice(medicineprice);
 		}
 		return "MedicinePriceList";
 	}
@@ -130,9 +142,9 @@ public class MedicinePriceAction extends ActionSupport{
 		medicinepriceService.uptMedicinePrice(medicineprice);
 		return "MedicinePriceList";
 	}
-	
+
 	private List<TMedpromiddle> medicinepriceList;
-	
+
 	public List<TMedpromiddle> getMedicinepriceList() {
 		return medicinepriceList;
 	}
@@ -141,40 +153,40 @@ public class MedicinePriceAction extends ActionSupport{
 		this.medicinepriceList = medicinepriceList;
 	}
 
-	//分页的属性设置
-	 private int page = 1; //第几页
-	    private PageBean pageBean; //包含分布信息的bean
-	    
-		public int getPage() {
-			return page;
-		}
+	// 分页的属性设置
+	private int page = 1; // 第几页
+	private PageBean pageBean; // 包含分布信息的bean
 
-		public void setPage(int page) {
-			this.page = page;
-		}
+	public int getPage() {
+		return page;
+	}
 
-		public PageBean getPageBean() {
-			return pageBean;
-		}
+	public void setPage(int page) {
+		this.page = page;
+	}
 
-		public void setPageBean(PageBean pageBean) {
-			this.pageBean = pageBean;
-		}
-	
+	public PageBean getPageBean() {
+		return pageBean;
+	}
+
+	public void setPageBean(PageBean pageBean) {
+		this.pageBean = pageBean;
+	}
+
 	@SuppressWarnings("unchecked")
 	public String ListMedicinePrice() {
-		String hql="";
-		if(type.equals("price"))
-			hql="where price !=''";
+		String hql = "";
+		if (type.equals("price"))
+			hql = "where price !=''";
 		else
-			hql="where prodate !=''";
-		this.pageBean=medicinepriceService.queryForPage(10, page, medicineprice,hql);
-		medicinepriceList = pageBean.getList();//有分页的获取列表
+			hql = "where prodate !=''";
+		this.pageBean = medicinepriceService.queryForPage(10, page, medicineprice, hql);
+		medicinepriceList = pageBean.getList();// 有分页的获取列表
 		return "toList";
 	}
-	
+
 	static String type;
-	
+
 	public String getType() {
 		return type;
 	}
@@ -183,8 +195,8 @@ public class MedicinePriceAction extends ActionSupport{
 		MedicinePriceAction.type = type;
 	}
 
-	private String hpvalue="";
-	
+	private String hpvalue = "";
+
 	public String getHpvalue() {
 		return hpvalue;
 	}
@@ -201,51 +213,53 @@ public class MedicinePriceAction extends ActionSupport{
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		String sql="";
-		if(type.equals("price"))
-			sql="where price like '%"+hpvalue+"%' or medid like '%"+hpvalue+
-			"%'";
+		String sql = "";
+		if (type.equals("price"))
+			sql = "where price like '%" + hpvalue + "%' or medid like '%" + hpvalue + "%'";
 		else
-			sql="where prodate like '%"+hpvalue+"%' or value like '%"+hpvalue+"%'" ;
-/*				"' or manager like '%"+hpvalue+"%' or"+
-				" phone like '%"+hpvalue+"%' or adress like '%"+hpvalue+"%'";*/
-		this.pageBean=medicinepriceService.queryForPage(10, page, medicineprice,sql);
-		medicinepriceList = pageBean.getList();//有分页的获取列表
+			sql = "where prodate like '%" + hpvalue + "%' or value like '%" + hpvalue + "%'";
+		/*
+		 * "' or manager like '%"+hpvalue+"%' or"+
+		 * " phone like '%"+hpvalue+"%' or adress like '%"+hpvalue+"%'";
+		 */
+		this.pageBean = medicinepriceService.queryForPage(10, page, medicineprice, sql);
+		medicinepriceList = pageBean.getList();// 有分页的获取列表
 		return "toList";
 	}
-	
+
 	public String getMedicinePriceA() {
-		medicineprice =medicinepriceService.getAMedicinePrice(medicineprice);
-		medicines=medicineService.getMedicine();
-		producters=producterService.getProducter();
+		medicineprice = medicinepriceService.getAMedicinePrice(medicineprice);
+		medicines = medicineService.getMedicine();
+		producters = producterService.getProducter();
 		return "success";
 	}
-	
-	//批量删除
+
+	// 批量删除
 	private String ID;
 
 	public String getID() {
 		return ID;
 	}
+
 	public void setID(String iD) {
 		ID = iD;
 	}
+
 	public String DelMoreMedicinePrice() {
-		String ids[]=ID.split(",");
-		for(int i=0;i<ids.length;i++){
-			int j=Integer.parseInt(ids[i]);
-			TMedpromiddle cc=new TMedpromiddle();
+		String ids[] = ID.split(",");
+		for (int i = 0; i < ids.length; i++) {
+			int j = Integer.parseInt(ids[i]);
+			TMedpromiddle cc = new TMedpromiddle();
 			cc.setId(j);
-			if(type.equals("price")){
+			if (type.equals("price")) {
 				medicineprice.setPrice(null);
-				medicinepriceService.uptMedicinePrice(cc);	
-				//medicinepriceService.delMedicinePrice(medicineprice);
-			}
-			else{
+				medicinepriceService.uptMedicinePrice(cc);
+				// medicinepriceService.delMedicinePrice(medicineprice);
+			} else {
 				medicineprice.setProdate(null);
-				medicinepriceService.uptMedicinePrice(cc);	
+				medicinepriceService.uptMedicinePrice(cc);
 			}
-			//medicinepriceService.delMedicinePrice(cc);
+			// medicinepriceService.delMedicinePrice(cc);
 		}
 		return "MedicinePriceList";
 	}
