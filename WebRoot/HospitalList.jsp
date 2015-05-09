@@ -88,48 +88,66 @@
 
 <body>
 <div id="title_bar">
+	<s:if test='type=="hos"'>
 	<span id="title" > 系统管理&gt;&gt;医院药房管理</span>
-    <ul id="operation">
+	</s:if>
+	<s:elseif test='type=="hoss"'>
+			<span id="title"> 系统管理&gt;&gt;医院药房查询统计</span>
+		</s:elseif>
+    <s:if test='type=="hos"'><ul id="operation">
     	<li><a href="#" class="like_btn" onclick="checkAll('id')">全选</a></li>
         <li><a href="#" class="like_btn" onclick="cancelCheck('id')"> 取消选择</a></li>
         <li><a href="#" class="like_btn" onclick="reverseCheck('id')">反选</a></li>
         <li><a href="#" class="like_btn" onclick="deleteChecked('id')"> &nbsp;删除&nbsp; </a></li>
         <li><img src="images/add.gif" width="10" height="10"  /><a href="${pageContext.request.contextPath }/HospitaltoAdd"> 添加</a></li>
-    </ul>
+    </ul></s:if>
 </div>
 
+<s:if test='type=="hos"'><table align="left">
+<tr><td>请输入医院药房名字：<input id="searchtype" /></td>
+<td><a href="javascript:SearchHospital()"/>搜索</td></tr>
+</table> </s:if>
+
+<s:elseif test='type=="hoss"'><table align="center">
+<tr><td>请输入医院药房名字：<input id="searchtype" /></td>
+<td><s:submit align="center" value="查询" onclick="javascript:SearchHospital()"/></td>
+</tr>
+</table></s:elseif>
 
 <table id="list_table" >
       <tr>
-        <th width="4%"   >选择</th>
+        <s:if test='type=="hos"'><th width="4%"   >选择</th></s:if>
         <th width="12%" >医院名称</th>
         <th width="14%" >电话</th>  
         <th width="10%"  >负责人</th>     
         <th width="20%">地址</th>
         <th width="14%"  >更新时间</th>
-        <th width="14%" >基本操作</th>
+        <s:if test='type=="hos"'><th width="14%" >基本操作</th></s:if>
       </tr>
       <s:iterator value="HospitalList">
       <tr>
-     	<td><input type="checkbox" name="id" value="<s:property value="id"/>" /></td>
+     	<s:if test='type=="hos"'><td><input type="checkbox" name="id" value="<s:property value="id"/>" /></td></s:if>
         <td ><s:property value="name" /></td>        
         <td ><s:property value="phone" /></td>
         <td ><s:property value="manager" /></td>
         <td ><s:property value="adress" /></td>
         <td ><s:property value="time" /></td>
-        <td><a href="javascript:getHospital('<s:property value="id" />')">修改</a>|
-          <a href="javascript:deleteHospital('<s:property value="id" />')">删除</a></td> 
+        <s:if test='type=="hos"'><td><a href="javascript:getHospital('<s:property value="id" />')">修改</a>|
+          <a href="javascript:deleteHospital('<s:property value="id" />')">删除</a></td> </s:if>
       </tr>
       </s:iterator>
     </table>
     
+    <s:elseif test='type=="hoss"'> <div align="center"><b>统计:&nbsp;<div style="color: red;display: inline;font-size: 30px"><s:property value="pageBean.allRow" /></div>&nbsp;条医院药房记录</b></div></s:elseif>	 
+    
 <div id="page_bar">
 	
-		<div id="page">
+		<s:if test='type=="hos"'> <div id="page">
 			共 <s:property value="pageBean.allRow" /> 条记录  共
 					<s:property value="pageBean.totalPage" /> 页 当前第 <s:property
 						value="pageBean.currentPage" /> 页 
-			</div>
+			</div></s:if>
+			
 			<div id="tool">
 					 <s:if
 						test="%{pageBean.currentPage == 1}">第一页 上一页</s:if> 
@@ -150,9 +168,6 @@
 <div>
   <p>&nbsp;</p>
 </div>
-<table align="center">
-<tr><td><input id="searchtype" /></td>
-<td><a href="javascript:SearchHospital()"/>搜索</td></tr>
-</table>
+
 </body>
 </html>

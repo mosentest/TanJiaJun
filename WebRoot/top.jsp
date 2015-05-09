@@ -12,6 +12,9 @@
          location.href="<%=request.getContextPath()%>/UserstoUpdate?user.id="+id;
          }
       }
+		window.onload=function (){
+			  setInterval("document.getElementById('time').innerHTML=new Date().toLocaleString()+' 星期'+'日一二三四五六'.charAt(new Date().getDay());",1000);
+			 }
 </script>
 <style type="text/css">
 <!--
@@ -25,8 +28,8 @@ body {
 	font-size: 12px;
 	color: #000000;
 }
-.STYLE5 {font-size: 12}
-.STYLE7 {font-size: 12px; color: #FFFFFF; }
+.STYLE5 {font-size: 12;color: #FFFFFF;}
+.STYLE7 {font-size: 13px; color: #00FF66; }
 .STYLE7 a{font-size: 12px; color: #FFFFFF; }
 a img {
 	border:none;
@@ -64,23 +67,22 @@ a img {
         <td width="194" height="40" background="images/main_07.gif">&nbsp;</td>
         <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td width="21"><img src="images/main_13.gif" width="19" height="14" /></td>
-            <td width="35" class="STYLE7"><div align="center"><a href="main.html" target="rightFrame">首页</a></div></td>
-            <td width="21" class="STYLE7"><img src="images/main_15.gif" width="19" height="14" /></td>
-            <td width="35" class="STYLE7"><div align="center"><a href="javascript:history.go(-1);">后退</a></div></td>
-            <td width="21" class="STYLE7"><img src="images/main_17.gif" width="19" height="14" /></td>
-            <td width="35" class="STYLE7"><div align="center"><a href="javascript:history.go(1);">前进</a></div></td>
-            <td width="21" class="STYLE7"><img src="images/main_19.gif" width="19" height="14" /></td>
-            <td width="35" class="STYLE7"><div align="center"><a href="javascript:window.parent.location.reload();">刷新</a></div></td>
-            <td width="21" class="STYLE7"><img src="images/main_21.gif" width="19" height="14" /></td>
-            <td width="35" class="STYLE7"><div align="center"><a href="http://www.865171.cn" target="_parent">帮助</a></div></td>
+<!--             <td width="21"><img src="images/main_13.gif" width="19" height="14" /></td> -->
+<!--             <td width="35" class="STYLE7"><div align="center"><a href="main.html" target="rightFrame">首页</a></div></td> -->
+<!--             <td width="21" class="STYLE7"><img src="images/main_15.gif" width="19" height="14" /></td> -->
+<!--             <td width="35" class="STYLE7"><div align="center"><a href="javascript:history.go(-1);">后退</a></div></td> -->
+<!--             <td width="21" class="STYLE7"><img src="images/main_17.gif" width="19" height="14" /></td> -->
+<!--             <td width="35" class="STYLE7"><div align="center"><a href="javascript:history.go(1);">前进</a></div></td> -->
+<!--             <td width="21" class="STYLE7"><img src="images/main_19.gif" width="19" height="14" /></td> -->
+<!--             <td width="35" class="STYLE7"><div align="center"><a href="javascript:window.parent.location.reload();">刷新</a></div></td> -->
+<!--             <td width="21" class="STYLE7"><img src="images/main_21.gif" width="19" height="14" /></td> -->
+<!--             <td width="35" class="STYLE7"><div align="center"><a href="http://www.865171.cn" target="_parent">帮助</a></div></td> -->
             <td>&nbsp;</td>
           </tr>
         </table></td>
-        <td width="248" background="images/main_11.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <td width="280" align="center" style="color:#333333; font-size: 14px;"><b>♛————当前时间————♛</b><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td width="16%"><span class="STYLE5"></span></td>
-            <td width="75%"><div align="center"><!--<span class="STYLE7">2012年10月18日 16:16:07 星期四</span></div>--></td>
+            <td width="100%"><div align="center"><b><span class="STYLE7" id="time"></span></b></div></td>
             <td width="9%">&nbsp;</td>
           </tr>
         </table></td>
@@ -101,7 +103,7 @@ a img {
         <td width="39"><img src="images/main_30.gif" width="39" height="30" /></td>
         <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td height="20" valign="bottom"><span class="STYLE1">当前登录用户：<s:property value="#session.loginUser.name" /> &nbsp;用户角色：<s:property value="#session.role.actername" /></span></td>
+           <td height="20" valign="bottom" align="center"><b><span font-size="15px">当前用户：<span  style="color: red; font-size: 20px;" ><s:property value="#session.loginUser.name" /></span> &nbsp;&nbsp;&nbsp;用户角色：<span  style="color: red;font-size: 20px;"><s:property value="#session.role.actername" /></span></span></b></td>
             <td valign="bottom" class="STYLE1"><div align="right"></div></td>
           </tr>
         </table></td>

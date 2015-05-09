@@ -99,6 +99,10 @@
     </ul>
 </div>
 
+<table align="left">
+<tr><td>请输入药品品种名字：<input id="searchtype" /></td>
+<td><a href="javascript:SearchMedicinetype()"/>搜索</td></tr>
+</table>
 
 <table id="list_table" >
       <tr>
@@ -149,9 +153,6 @@
 <div>
   <p>&nbsp;</p>
 </div>
-<table align="center">
-<tr><td><input id="searchtype" /></td>
-<td><a href="javascript:SearchMedicinetype()"/>搜索</td></tr>
-</table>
+
 </body>
 </html>

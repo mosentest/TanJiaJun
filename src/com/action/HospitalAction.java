@@ -92,6 +92,15 @@ public class HospitalAction extends ActionSupport{
 			this.pageBean = pageBean;
 		}
 	
+static String type;
+		
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			HospitalAction.type = type;
+		}
 	@SuppressWarnings("unchecked")
 	public String ListHospital() {
 		this.pageBean=hospitalService.queryForPage(10, page, hospital,"");

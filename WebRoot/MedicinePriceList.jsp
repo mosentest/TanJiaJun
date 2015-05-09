@@ -102,6 +102,10 @@
     </ul>
 </div>
 
+<table align="left">
+<tr><td>请输入关键字：<input id="searchtype"  value="<s:property value="hpvalue"/>" /></td>
+<td><a href="javascript:SearchMedicinePrice()"/>搜索</td></tr>
+</table>
 
 <table id="list_table" >
       <tr>
@@ -162,9 +166,6 @@
 <div>
   <p>&nbsp;</p>
 </div>
-<table align="center">
-<tr><td><input id="searchtype"  value="<s:property value="hpvalue"/>" /></td>
-<td><a href="javascript:SearchMedicinePrice()"/>搜索</td></tr>
-</table>
+
 </body>
 </html>

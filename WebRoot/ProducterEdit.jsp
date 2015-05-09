@@ -118,6 +118,10 @@
 																				<tr>
 																					<s:textarea name="producter.adress" cols="45" rows="5" label="地址" id="adress"/>
 																				</tr>
+																				<tr>
+																					<td><s:textfield name="producter.time" type="hidden" />
+																					</td>
+																					</tr>
 																			</table> <br />
 																		</td>
 																	</tr>

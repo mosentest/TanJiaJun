@@ -109,6 +109,7 @@ body {
 	</s:iterator>   
       </ul>
     </li>
+    
       <li> <a class="head" >查询统计</a>
   
     <ul>
@@ -117,14 +118,11 @@ body {
       <s:iterator value="#session.mylimitlist4" >
 
         <li><a href='<s:property value="url" />' target="rightFrame"><s:property value="limitname" /></a></li>	
-
 	</s:iterator>   
       </ul>
     </li>
     
-  
-
-
+        
 
   </ul>
 </div>

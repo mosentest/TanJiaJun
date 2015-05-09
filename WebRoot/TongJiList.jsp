@@ -17,6 +17,11 @@
      	// alert("testea-------16");
         // location.href="<%=request.getContextPath()%>/TongJi_Search?medicineid="+medicineid+"&producterid"+producterid+"&medicinetypeid"+medicinetypeid+"&medicinetime"+medicinetime;
      //}   
+ 
+ window.onload = function () {
+		var len = ($("#list_table").find("tr").length - 1);
+		$("#find-result").html(len);
+ }
   </script>
 <link rel="stylesheet" type="text/css" href="css/main.css"/>
 </head>
@@ -40,8 +45,7 @@
 </table>
 </s:form>
 <table id="list_table" >
-      <tr>
-      <th width="10%"   >编号</th>
+      <tr>     
         <th width="10%"   >批号</th>
         <th width="12%" >药品名称</th>
         <th width="10%"   >种类</th>
@@ -52,7 +56,6 @@
       </tr>
       <s:iterator value="MedicineList">
       <tr>
-      <td ><s:property value="id" /></td>
      	<td ><s:property value="number" /></td>
         <td ><s:property value="name" /></td>
         <td ><s:property value="TMedicinetype.protypename" /></td>
@@ -63,6 +66,8 @@
       </tr>
       </s:iterator>
     </table>
+
+    <div align="center"><b>统计:&nbsp;<div id="find-result" style="color: red;display: inline;font-size: 30px"></div>&nbsp;条药品记录</b></div>
     
 <!--<div id="page_bar">
 		<div id="page">
@@ -72,9 +77,5 @@
 --><div>
   <p>&nbsp;</p>
 </div>
-<!--<table align="center">
-<tr><td><input id="searchtype"  value="<s:property value="hpvalue"/>" /></td>
-<td><a href="javascript:SearchMedicine()"/>搜索</td></tr>
-</table>
---></body>
+</body>
 </html>

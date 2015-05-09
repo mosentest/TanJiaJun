@@ -126,9 +126,12 @@
 </head>
 
 <body>
-	<div id="title_bar">
+	<s:if test='type=="in"'><div id="title_bar">
 		<span id="title">系统管理&gt;&gt;入库管理&gt;&gt;添加入库单药品</span>
-	</div>
+	</div></s:if>
+	<s:elseif test='type=="out"'><div id="title_bar">	
+	    <span id="title">系统管理&gt;&gt;出库管理&gt;&gt;添加出库单药品</span></div>
+		</s:elseif>
 	<div align="center">
 		<s:form id="allorder-detail-add" action="AllordertoAdd" method="POST"
 			onsubmit="return clickForm(this)">
@@ -145,8 +148,8 @@
 				<td height="20" colspan="13" align="center" bgcolor="#EEEEEE"
 					class="tablestyle_title" style="text-align: center;">
 					<b>
-					<s:if test="type == 'in'">添加入库单药品</s:if>
-					<s:elseif test="type == 'out'">添加出库单药品</s:elseif>
+					<s:if test='type=="in"'>添加入库单药品</s:if>
+					<s:elseif test='type=="out"'>添加出库单药品</s:elseif>
 					</b></td>
 			</tr>
 			<tr>
@@ -162,23 +165,16 @@
 									</tr>
 									<tr>
 										<td align="center">
-											<s:if test="type == 'in'">
-												<s:select
+											
+												<s:if test='type=="in"'><s:select
 														name="allorderdetail.TMedicine.id" label="*药品名"
 														headerKey="0" list="medicines" listKey="id" listValue="name"
 														headerValue="-- 请选择 --" id="medicineid"
 														value="%{allorderdetail.TMedicine.id}">
-												</s:select>	
-											</s:if>
-<!-- 											<s:elseif test="type == 'out'"> -->
-<!-- 												<s:select -->
-<!-- 														name="medicinefatory.TMedicinefatory.id" label="*药品名" -->
-<!-- 														headerKey="0" list="medicines2" listKey="id" listValue="medname" -->
-<!-- 														headerValue="-- 请选择 --" id="medicineid2" -->
-<!-- 														value="%{medicinefatory.TMedicinefatory.id}"> -->
-<!-- 												</s:select>	 -->
-<!-- 											</s:elseif> -->
-											<s:elseif test="type == 'out'">
+												</s:select>	</s:if>
+												
+																			
+											<s:elseif test='type=="out"'>
 												<s:iterator value="%{medicinefatory}" var="list">
 													${list.medname}
 												</s:iterator>
@@ -200,7 +196,7 @@
 									</tr>
 									<tr>
 										<td><s:textfield name="allorderdetail.price"
-												label="*入库价格（元）" readonly="true" id="price" /></td>
+												label="*入库单价（元）" readonly="true" id="price" /></td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>
@@ -214,7 +210,7 @@
 										<td>&nbsp;</td>
 									</tr>
 									<tr>
-										<td><s:textfield name="allorderdetail.sum" label="*总价"
+										<td><s:textfield name="allorderdetail.sum" label="*总价格（元）"
 												readonly="true" id="sum" value="%{allorderdetail.sum}" /></td>
 										<td>&nbsp;</td>
 										<td>&nbsp;</td>

@@ -130,9 +130,9 @@ request.setAttribute("countOrder", countOrder);
 											<tr>
 											<th>药品</th>
 											<th>供应商</th>
-											<th>单价</th>
+											<th>单价（元）</th>
 											<th>数量</th>
-											<th>总价</th>
+											<th>总价（元）</th>
 											<th>操作</th>
 										 	</tr>
 										<s:iterator value="#request.allorderdetails">

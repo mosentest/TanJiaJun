@@ -115,7 +115,8 @@
 		if(number_max!=0){
 			str=str+"\n\n（绿标）当前有【"+number_max+"】条药品库存积压过多，建议及时清理！";
 		}
-		if(str.length>10){
+// 		alert(str.length);
+		if(str.length>58){
 			alert(str);
 		}
 	}
@@ -143,7 +144,13 @@
 		</ul>
 	</div>
 
-
+	<table align="left">
+			<tr>
+				<td>请输入药品名字：<input id="searchtype" /></td>
+				<td><a href="javascript:SearchMedicineFatory()" />搜索</td>
+			</tr>
+		</table>
+		
 	<table id="list_table">
 		<tr>
 			<th width="4%">选择</th>
@@ -226,13 +233,6 @@
 	<div>
 		<p>&nbsp;</p>
 	</div>
-	<s:if test='type=="fatory"'>
-		<table align="center">
-			<tr>
-				<td><input id="searchtype" /></td>
-				<td><a href="javascript:SearchMedicineFatory()" />搜索</td>
-			</tr>
-		</table>
-	</s:if>
+
 </body>
 </html>

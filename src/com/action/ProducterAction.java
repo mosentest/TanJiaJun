@@ -87,6 +87,16 @@ public class ProducterAction extends ActionSupport{
 		public void setPageBean(PageBean pageBean) {
 			this.pageBean = pageBean;
 		}
+		
+		static String type;
+		
+		public String getType() {
+			return type;
+		}
+
+		public void setType(String type) {
+			ProducterAction.type = type;
+		}
 	
 	@SuppressWarnings("unchecked")
 	public String ListProducter() {
